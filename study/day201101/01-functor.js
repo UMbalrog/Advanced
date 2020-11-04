@@ -1,5 +1,7 @@
 // 函子
+const _ = require('lodash');
 
+console.log(_);
 class constr{
   static of (fn){
     return new constr(fn);
@@ -14,4 +16,4 @@ class constr{
 
 // let r = new constr(3).map(x=>x+1).map(x=>x*8);
 
-console.log(r)
+// console.log(r)
