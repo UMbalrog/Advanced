@@ -11,7 +11,8 @@ const perProxy = new Proxy(per,{
   set(target, prop, value, ) { // 设置监听
     // console.log(target, prop, value);
     target[prop] = value;
-  }
+  },
+  // ... 各种对数据的拦截方法 13种
 })
 // perProxy及为代理对象
 perProxy.gender = 23;
