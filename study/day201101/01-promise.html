@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+<body>
+  <script>
+    let promise = new Promise(function(resolve, reject){
+      resolve('foo');
+    })
+    promise.then(res => {
+      console.log('1',res);
+      return new Promise(function(resolve, reject){
+        reject('错误');
+      })
+    })
+    .then(res => {
+      console.log('2', res);
+      return '2的成功'
+    }, err => {
+      console.log('2err', err);
+      return '2的失败'
+    } )
+    .then(res => {
+      console.log('3', res);
+    })
+    .catch(err => {
+      console.log('last', err)
+    });
+
+
+    
+  </script>
+</body>
+</html>
