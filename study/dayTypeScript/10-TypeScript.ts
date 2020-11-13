@@ -56,3 +56,4 @@ interface Cach {
 const cache: Cach = {}
 cache.foo = 'value1'
 cache.bar = 'value2'
+
