@@ -57,3 +57,33 @@ const cache: Cach = {}
 cache.foo = 'value1'
 cache.bar = 'value2'
 
+// ------------------------------------
+// 类
+class Person {
+  name: string
+  private age: number
+  protected gender: boolean
+  private contry: string
+  constructor(name:string, age:number){
+    this.name = name
+    this.age = age
+    this.gender = true
+    this.contry = 'str'
+  }
+  sayHi (msg: string): void {
+    console.log(`I am ${this.name}, ${msg}`)
+    console.log(this.age)
+    console.log(this.gender)
+  }
+}
+class Student extends Person {
+  private constructor (name: string, age: number) {
+    super(name, age)
+    console.log(this.gender)
+    // console.log(this.contry)
+  }
+
+  static create (name: string, age: number) {
+    return new Student(name, age)
+  }
+}
