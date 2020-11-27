@@ -14,12 +14,27 @@ module.exports = {
   module:{
     rules:[
       {
+        test: /.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'] //babel只是一个转换新特性的工具集合，具体使用还要指定插件
+          }
+        }
+      },
+      {
         test:/.css$/,
         use: ['style-loader','css-loader']
       },
       {
         test:/.png$/,
-        use: ['url-loader']
+        use: {
+          // 限制10kb一下转为base64，其他还是为文件，默认利用file-loader
+          loader: 'url-loader',
+          options: {
+            limit: 10*1024 // 10kb
+          }
+        }
       }
     ]
   }
