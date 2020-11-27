@@ -35,6 +35,15 @@ module.exports = {
             limit: 10*1024 // 10kb
           }
         }
+      },
+      { //打包html时默认加载图片标签下的src的资源，如果要加载其他资源配置attrs属性
+        test: /.html$/,
+        use: {
+          loader: 'html-loader',
+          options:{
+            attrs: ['img:src', 'a:href']
+          }
+        }
       }
     ]
   }
