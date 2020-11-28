@@ -14,6 +14,10 @@ module.exports = {
   module:{
     rules:[
       {
+        test: /.md$/,
+        use: './plugin/md-loader.js' //这里也可以直接引用本地地址
+      },
+      {
         test: /.js$/,
         use: {
           loader: 'babel-loader',
