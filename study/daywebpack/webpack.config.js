@@ -75,9 +75,21 @@ module.exports = {
       // }
     ]
   },
-  // devServer :{
-
-  // },
+  devServer :{
+    contentBase: './public', // 公共资源目录，可以是数组一个一个找
+    proxy: {
+      '/api': {
+        // http://localhost:8080/api/users -> https://api.github.com/api/users
+        target: 'https://api.github.com', //请求的代理地址
+        // http://localhost:8080/api/users -> https://api.github.com/users
+        pathRewrite: { //匹配目录替换
+          '^/api': ''
+        },
+        // 不能使用 localhost:8080 作为请求 GitHub 的主机名 设为true后就会以后目标域名及https://api.github.com请求
+        changeOrigin: true
+      }
+    }
+  },
   plugins:[
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
