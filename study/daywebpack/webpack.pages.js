@@ -26,13 +26,14 @@ class MyPlugin {
 
 
 module.exports = {
+  // 这个属性有三种取值，分别是 production、development 和 none。
+  // 1. 生产模式下，Webpack 会自动优化打包结果；
+  // 2. 开发模式下，Webpack 会自动优化打包速度，添加一些调试过程中的辅助；
+  // 3. None 模式下，Webpack 就是运行最原始的打包，不做任何额外处理；
   mode:'none',
-  entry: {
-    index: './src/main.js',
-    about: './src/main1.js'
-  },
+  entry: './src/main.js',
   output: {
-    filename: '[name].bundle.js',
+    filename: 'bundle.js',
     path: path.join(__dirname, 'dist')
   },
   module:{
@@ -82,24 +83,47 @@ module.exports = {
       // }
     ]
   },
-  plugins:[
-    new HtmlWebpackPlugin({
-      title: '我是测试页面',
-      template: './src/index.html',
-      filename: 'index.html',
-      chunks: ['index']
-    }),
-    new HtmlWebpackPlugin({
-      title: '我是测试页面',
-      template: './src/about.html',
-      filename: 'about.html',
-      chunks: ['about']
-    }),
-  ],
-  optimization: {
-    splitChunks: {
-      // 自动提取所有的公共模块到单独的 bundle中
-      chunks: 'all'
+  devServer :{
+    hot:true,  //模块热替换
+    contentBase: './public', // 公共资源目录，可以是数组一个一个找
+    proxy: {
+      '/api': {
+        // http://localhost:8080/api/users -> https://api.github.com/api/users
+        target: 'https://api.github.com', //请求的代理地址
+        // http://localhost:8080/api/users -> https://api.github.com/users
+        pathRewrite: { //匹配目录替换
+          '^/api': ''
+        },
+        // 不能使用 localhost:8080 作为请求 GitHub 的主机名 设为true后就会以后目标域名及https://api.github.com请求
+        changeOrigin: true
+      }
     }
+  },
+  devtool: 'cheap-module-eval-source-map',
+  plugins:[
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: '我是测试页面',
+      template: './src/index.html'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    // new HtmlWebpackPlugin({
+    //   filename: 'about.html',
+    //   template: './src/index.html'
+    // }),
+    // new MyPlugin()
+    new webpack.DefinePlugin({
+      API_BASE_URL: JSON.stringify('https://api.example.com')
+    })
+  ],
+  optimization: { //配置webpack内部的优化配置的
+    // 模块只导出被使用的成员
+    usedExports: true,
+    // 尽可能合并每一个模块到一个函数中
+    concatenateModules: true,
+    // 压缩输出结果
+    minimize: true,
+    // --------------
+    sideEffects: true //副作用生成模式下会自动开启，开启之后，会先去当前项目的package.json查看当前代码是否有副作用，没有的话，就不会打包儿无用的模块。
   }
 }
