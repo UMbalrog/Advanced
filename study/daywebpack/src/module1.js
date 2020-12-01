@@ -1,7 +1,6 @@
-let hello = (param) => { 
-  let name = 'modules1'
-  console.log(name+param)
-
+const hello = (param) => {
+  const name = 'modules1'
+  console.log(name + param)
 }
 
 export default hello
