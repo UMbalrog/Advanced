@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发布订阅模式</title>
+</head>
+<body>
+  <script>
+    class EventCenter {
+      constructor() {
+        // {'click': [fn1,fn2], 'click2': [fn] }
+        this.subs = {} // 数据中心
+      }
+
+      $on(eventType, handler) { // 订阅者入口
+        this.subs[eventType] = this.subs[eventType] || [];
+        this.subs[eventType].push(handler);
+      }
+
+      $emit(eventType) { // 发布者入口
+        this.subs[eventType] && this.subs[eventType].forEach(handler => { handler()});
+      }
+    }
+
+    let vm = new EventCenter();
+    // 测试
+    vm.$on('dataChange', () => {
+      console.log('dataChange')
+    })
+
+    vm.$on('dataChange', () => {
+      console.log('dataChange1')
+    })
+    // 触发事件(发布消息)
+    vm.$emit('dataChange')
+
+
+  </script>
+</body>
+</html>
