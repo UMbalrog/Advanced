@@ -17,8 +17,8 @@
     <input type="text" v-model="msg">
     <input type="text" v-model="count">
   </div>
-  <script src="./vue.min.js"></script>
-  <!-- <script src="./js/minvue.js"></script> -->
+  <!-- <script src="./vue.min.js"></script> -->
+  <script src="./js/minvue.js"></script>
   <script>
     let vm = new Vue({
       el: '#app',
@@ -28,6 +28,9 @@
         person: { name: 'zs' }
       }
     })
+
+    console.log(vm)
+
   </script>
 </body>
 </html>
