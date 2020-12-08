@@ -10,9 +10,9 @@
   <div id="app">
     <h1>差值表达式</h1>
     <h3>{{ msg }}</h3>
-    <h3>{{ count }}</h3>
+    <h3>总数{{ count }}</h3>
     <h1>v-text</h1>
-    <div v-text="msg"></div>
+    <div class="abc"><div v-text="msg"></div></div>
     <h1>v-model</h1>
     <input type="text" v-model="msg">
     <input type="text" v-model="count">
@@ -30,7 +30,7 @@
         person: { name: 'zs' }
       }
     })
-    vm.msg = {test:"lisi"}
+    // vm.msg = {test:"lisi"}
     console.log(vm)
 
   </script>
