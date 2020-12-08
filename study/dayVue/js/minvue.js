@@ -1,5 +1,5 @@
 /*
-  + Vue
+  Vue
   ----------
   + $options
   + $el
@@ -17,10 +17,11 @@ class Vue{
     // 2、把data中的成员转换为getter和setter注入到vue实例中
     this._proxyData(this.$data)
     // 3、调用observer对象，监听数据的变化
+    new Observer(this.$data)
     // 4、调用compiler对象，解析指令和差值表达式
   }
 
-  _proxyData(data) {
+  _proxyData(data) { //data代理器
     // 遍历获取属性，利用Vue实例做数据劫持
     Object.keys(data).forEach(key => {
       // 这里this就是Vue实例

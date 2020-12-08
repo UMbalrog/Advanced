@@ -18,6 +18,7 @@
     <input type="text" v-model="count">
   </div>
   <!-- <script src="./vue.min.js"></script> -->
+  <script src="./js/observer.js"></script>
   <script src="./js/minvue.js"></script>
   <script>
     let vm = new Vue({
@@ -28,7 +29,7 @@
         person: { name: 'zs' }
       }
     })
-
+    vm.msg = {test:"lisi"}
     console.log(vm)
 
   </script>
