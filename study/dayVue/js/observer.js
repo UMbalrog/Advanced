@@ -2,7 +2,7 @@
   Observer
   --------------
   + walk(data)  //遍历data中的值，并筒处理
-  + defineReactive  //给属性添加getter和setter
+  + defineReactive(obj, key, val)  //给属性添加getter和setter
 */ 
 class Observer{
   constructor(data){
