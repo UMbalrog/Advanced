@@ -46,16 +46,26 @@ class Compiler{
   }
   updata(node, key, attrName) {
     let updatefn = this[attrName+'Updater']
-    updatefn && updatefn(node, this.vm[key])
+    updatefn && updatefn.call(this, node, this.vm[key], key)
   }
 
   //处理各种指令，各自去处理各个指令 v-text
-  textUpdater(node, val) {
+  textUpdater(node, val, key) { 
+    // 这里注意this，textUpdater是在updata中调用的，这里的this指向了undefined，所以调用时，要通过call传递this
     node.textContent = val
+    // 创建Watcher对象，监听数据变化，跟新视图
+    new Watcher(this.vm, key, (newValue) => {
+      node.textContent = newValue
+    })
   }
   //处理各种指令 v-model
-  modelUpdater(node, val) {
+  modelUpdater(node, val, key) {
+    // 这里注意this，modelUpdater是在updata中调用的，这里的this指向了undefined，所以调用时，要通过call传递this
     node.value = val
+    // 创建Watcher对象，监听数据变化，跟新视图
+    new Watcher(this.vm, key, (newValue) => {
+      node.value = newValue
+    })
   }
 
   // 编译文本，处理差值表达式
@@ -67,6 +77,10 @@ class Compiler{
     if(reg.test(value)){
       let key = RegExp.$1.trim() //匹配到变量后去除空格
       node.textContent = value.replace(reg, this.vm[key])
+      // 创建Watcher对象，监听数据变化，跟新视图
+      new Watcher(this.vm, key, (newValue) => {
+        node.textContent = newValue
+      })
     }
   }
   // 判断此属性是否为指令

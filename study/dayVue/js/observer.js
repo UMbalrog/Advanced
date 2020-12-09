@@ -20,11 +20,15 @@ class Observer{
 
   defineReactive(obj, key, val) {
     const that = this;
+    // 创建dep，发布者对象
+    let dep = new Dep()
     this.walk(val); //这里walk会判断是否对象，对象的话继续递归的往下遍历，这个设计很好。
     Object.defineProperty(obj, key, {
       enumerable: true,  //可遍历
       configurable: true,  //可枚举
       get() { // 注意这里不可使用obj[key], 使用obj[key]就是调用get方法会陷入死循环
+        // 收集依赖添加观察者
+        Dep.target && dep.addSub(Dep.target)
         return val
       },
       set(newval) {
@@ -32,6 +36,7 @@ class Observer{
         val = newval;
         that.walk(newval) //当属性新赋的值对对象时，也要添加getter和setter方法
         // 发送通知
+        dep.notify()
       }
     })
   }

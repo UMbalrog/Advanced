@@ -18,6 +18,8 @@
     <input type="text" v-model="count">
   </div>
   <!-- <script src="./vue.min.js"></script> -->
+  <script src="./js/Dep.js"></script>
+  <script src="./js/Watcher.js"></script>
   <script src="./js/Compiler.js"></script>
   <script src="./js/observer.js"></script>
   <script src="./js/minvue.js"></script>
@@ -31,7 +33,10 @@
       }
     })
     // vm.msg = {test:"lisi"}
-    console.log(vm)
+    setTimeout(() => {
+      console.log(vm.msg = "abcde")
+    }, 2000)
+    
 
   </script>
 </body>
