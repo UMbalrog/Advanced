@@ -64,8 +64,14 @@ class Compiler{
     node.value = val
     // 创建Watcher对象，监听数据变化，跟新视图
     new Watcher(this.vm, key, (newValue) => {
-      node.value = newValue
+      node.value = newValue //这里不会触发input事件所以不会死循环
     })
+
+    // 数据绑定
+    node.addEventListener('input', () => {
+      this.vm[key] = node.value
+    })
+
   }
 
   // 编译文本，处理差值表达式

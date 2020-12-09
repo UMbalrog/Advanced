@@ -17,7 +17,6 @@ class Dep{
   }
   // 发布通知观察者
   notify() {
-    console.log('发布')
     this.subs.forEach(sub => {
       sub.upData()
     })

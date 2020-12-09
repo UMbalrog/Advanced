@@ -25,6 +25,7 @@ class Watcher{
   upData() { //数据变化跟新
     let newValue = this.vm[this.key]
     if(newValue === this.oldValue) return;
+    this.oldValue = newValue //替换oldValue
     this.cb && this.cb(newValue)
   }
 
