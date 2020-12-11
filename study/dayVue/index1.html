@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h4>{{ dog.name }}</h4>
+    <h3>总数{{ dog.text }}</h3>
+    <h3>总数{{ dog.age }}</h3>
+  </div>
+  <script src="./vue.min.js"></script>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        o: 'object',
+        dog: {
+          name: 'tom'
+        }
+      },
+      created() {
+        this.dog.text = 'Trump'
+        this.$set(this.dog, 'age', '87')
+      },
+      method: {
+        clickHandler () {
+          // 该 name 属性是否是响应式的
+          
+        }
+      }
+    })
+  </script>
+</body>
+</html>
