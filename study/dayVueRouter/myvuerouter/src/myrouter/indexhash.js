@@ -35,26 +35,32 @@ export default class VueRouter {
 
   constructor(options) {
     this.options = options;
+    this.mode = options.mode;
     this.routeMap = {};
     // data需要是响应式的对象，通过vue的
     this.data = _Vue.observable({
-      current: '/' //当前路径默认根目录
+      current: '#/' //当前路径默认根目录
     })
   }
 
   createRouteMap() {
     // 遍历所有的路由规则 把路由规则解析成键值对的形式存储到routeMap中
     this.options.routes.forEach(route => {
-      this.routeMap[route.path] = route.component
+      this.routeMap['#'+route.path] = route.component
     });
   }
 
   init() {
+    this.HashHistory();
     this.createRouteMap();
     this.initComponents(_Vue);
     this.initEvent()
   }
 
+  HashHistory() {
+    window.location.replace(this.data.current)
+  }
+  
   initComponents(Vue) {
     const _that = this;
 
@@ -66,7 +72,7 @@ export default class VueRouter {
       render(h) {
         return h('a', {
           attrs: {
-            href: this.to
+            href: "#"+this.to
           },
           on: {
             click: this.clickhandle
@@ -74,13 +80,11 @@ export default class VueRouter {
         }, [this.$slots.default])
       },
       methods: {
-        clickhandle(e){
+        clickhandle(){
           // 改变地址栏内容，第一个参数为，触发popstate事件时传入的对象
-          history.pushState({}, 'haha', this.to);
-          // _that.data.current = this.to; 
+          // history.pushState({}, 'haha', this.to); 
 
-          this.$router.data.current = this.to; //记录跳转地址到当前router实例上的data.current属性上，存续当前地址，并且因为data是响应式的，它会自动更新我们的组件；
-          e.preventDefault() //阻止默认行为
+          this.$router.data.current = this.to;
         }
       }
 
@@ -98,8 +102,9 @@ export default class VueRouter {
 
   initEvent() {
     // 这里为了监听点击后退按钮的问题
-    window.addEventListener('popstate', () => {
-      this.data.current = window.location.pathname;
+    window.addEventListener('hashchange', () => {
+      // console.log('hashchange触发', window.location);
+      this.data.current = window.location.hash;
     })
   }
 
