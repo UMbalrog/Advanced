@@ -16,6 +16,14 @@
     <h1>v-model</h1>
     <input type="text" v-model="msg">
     <input type="text" v-model="count">
+
+    <div v-html="html"></div>
+    <div v-on:click="clickhaundler">
+      我是按钮
+      <div v-on:click.stop="stopcl">阻止冒泡</div>
+    </div>
+    
+
   </div>
   <!-- <script src="./vue.min.js"></script> -->
   <script src="./js/Dep.js"></script>
@@ -29,13 +37,22 @@
       data: {
         msg: 'Hello Vue',
         count: 100,
-        person: { name: 'zs' }
+        person: { name: 'zs' },
+        html: '<h2>我是标签</h2>'
+      },
+      methods:{
+        clickhaundler(){
+          console.log('我被点击了')
+        },
+        stopcl() {
+          console.log('我是阻止冒泡')
+        }
       }
     })
     // vm.msg = {test:"lisi"}
-    setTimeout(() => {
-      console.log(vm.msg = "abcde")
-    }, 2000)
+    // setTimeout(() => {
+    //   console.log(vm.msg = "abcde")
+    // }, 2000)
     
 
   </script>

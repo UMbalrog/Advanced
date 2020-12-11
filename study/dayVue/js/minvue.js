@@ -20,6 +20,14 @@ class Vue{
     new Observer(this.$data)
     // 4、调用compiler对象，解析指令和差值表达式
     new Compiler(this);
+
+    // 5、将事件榜入实例
+    if(options.methods){
+      for(let item in options.methods){
+        this[item] = options.methods[item]
+      }  
+    }
+    
   }
 
   _proxyData(data) { //data代理器

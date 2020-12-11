@@ -45,8 +45,13 @@ class Compiler{
     })
   }
   updata(node, key, attrName) {
+    let attrName1 = [];
+    if(attrName.indexOf(":") > -1){
+      attrName1 = attrName.split(':');
+      attrName = attrName1[0];
+    }
     let updatefn = this[attrName+'Updater']
-    updatefn && updatefn.call(this, node, this.vm[key], key)
+    updatefn && updatefn.call(this, node, this.vm[key], key, attrName1[1])
   }
 
   //处理各种指令，各自去处理各个指令 v-text
@@ -71,7 +76,29 @@ class Compiler{
     node.addEventListener('input', () => {
       this.vm[key] = node.value
     })
+  }
+  // v-html
+  htmlUpdater(node, val, key) {
+    node.innerHTML = val;
+    new Watcher(this.vm, key, (newValue) => {
+      node.innerHTML = newValue //这里不会触发input事件所以不会死循环
+    })
+  }
 
+  // v-on
+  onUpdater(node, val, key, events) {
+    // console.log(val,key,events)
+    let event = (events.indexOf('.') > -1) ? events.split('.')[0]: events;
+    let Modifierlist = events.split('.'); //处理修饰符
+
+    node['on'+event] = (event) => {
+      // 可继续判断不同事件
+      this.vm[key]();
+      if(Modifierlist.indexOf('stop') > -1){
+        event.stopPropagation()
+      }
+    }
+    
   }
 
   // 编译文本，处理差值表达式
