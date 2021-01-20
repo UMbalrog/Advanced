@@ -23,6 +23,7 @@ export default class VueRouter {
     // 2、将vue的构造函数记得到全局变量中，将来在vuerouter的实例中还要使用这个vue的构造函数，比如在创建router-link这些组件时使用Vue.component方法；
     _Vue = Vue
     // 3、把创建的Vue实例时候的传入的router对象注入到所有的Vue实例上，创建$router
+    // 这里是要将router实例挂载在Vue上，直接调用install时，router还没有实例，所以在beforeCreate钩子函数中去挂载router实例
     Vue.mixin({
       beforeCreate() {
         if(this.$options.router){ //有这个选项才添加，除去组件
