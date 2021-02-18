@@ -1,25 +1,37 @@
-const Vue = require('vue')
 const express = require('express')
 const fs = require('fs')
-
-const template = fs.readFileSync('./index.template.html', 'utf-8')
-const serverBundle = require('./dist/vue-ssr-server-bundle.json');
-const clientManifest = require('./dist/vue-ssr-client-manifest.json');
-
-const renderer = require('vue-server-renderer').createBundleRenderer(serverBundle, {
-  template,
-  clientManifest
-})
+const { createBundleRenderer } = require('vue-server-renderer')
+const { setupDev } = require('./build/setup-dev-server')
 
 const server = express();
-
 server.use('/dist', express.static('./dist'))
-server.get('/', (req, res) => {
-  
+
+let renderer;
+let onReady;
+const isProd = process.env.NODE_ENV === 'production';
+
+if(isProd){ // 生产
+  const template = fs.readFileSync('./index.template.html', 'utf-8')
+  const serverBundle = require('./dist/vue-ssr-server-bundle.json');
+  const clientManifest = require('./dist/vue-ssr-client-manifest.json');
+  renderer = createBundleRenderer(serverBundle, {
+    template,
+    clientManifest
+  });
+}else{
+  // 检测文件变化，-> 构建打包项目 -> 重新生成renderer渲染器
+  onReady = setupDev(server, (serverBundle, template, clientManifest) => {
+    renderer = createBundleRenderer(serverBundle, {
+      template,
+      clientManifest
+    })
+  });
+}
+
+const render = (req, res) => {
   renderer.renderToString({
     title: '我是title'
   },(err, html) => {
-    // console.log(html);
     if (err) {
       res.status(500).end('Internal Server Error')
       return;
@@ -27,8 +39,17 @@ server.get('/', (req, res) => {
     res.setHeader('Content-Type', 'text/html; charset=utf8');
     res.end(html)
   });
-  
-})
+}
+
+server.get('/', isProd 
+  ? render 
+  : async (req, res) => {
+    //等待构建完成执行render，利用Promise
+    console.log('完成')
+    await onReady
+    render(req, res)
+  }
+)
 
 server.listen(3000, (res) => {
   console.log('server running at port 3000...')
