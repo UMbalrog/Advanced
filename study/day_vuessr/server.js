@@ -45,8 +45,8 @@ server.get('/', isProd
   ? render 
   : async (req, res) => {
     //等待构建完成执行render，利用Promise
-    console.log('完成')
     await onReady
+    // console.log('开发模式')
     render(req, res)
   }
 )
