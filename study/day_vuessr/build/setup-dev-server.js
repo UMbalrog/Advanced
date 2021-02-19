@@ -92,7 +92,6 @@ exports.setupDev = (server, callback) => {
 
   // 重要!! 将 clientMiddleware 挂载到 express 服务中，提供对齐内存中数据的访问； 就是让静态资源访问到内存中的。
   server.use(clientMiddleware);
-
   
   return promise;
 }

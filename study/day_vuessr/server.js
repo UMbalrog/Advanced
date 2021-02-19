@@ -33,7 +33,7 @@ const render = (req, res) => {
     title: '我是title',
     url: req.url
   };
-  renderer.renderToString(context,(err, html) => {
+  renderer.renderToString(context, (err, html) => {
     if (err) {
       res.status(500).end('Internal Server Error')
       return;
@@ -42,6 +42,22 @@ const render = (req, res) => {
     res.end(html)
   });
 }
+
+// const render = async (req, res) => {
+//   try {
+//     const html = await renderer.renderToString({
+//       title: '我是title',
+//       meta: `
+//         <meta name="description" content="拉勾教育">
+//       `,
+//       url: req.url
+//     })
+//     res.setHeader('Content-Type', 'text/html; charset=utf8')
+//     res.end(html)
+//   } catch (err) {
+//     res.status(500).end('Internal Server Error.')
+//   }
+// }
 // 设为'*'任何请求都会走这里
 server.get('*', isProd 
   ? render 

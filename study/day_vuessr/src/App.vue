@@ -16,13 +16,11 @@ export default {
   name:'App',
   data() {
     return {
-      message:'测试文案哈哈哈哈'
+      
     }
   },
   methods: {
-    onClick () {
-      console.log('Hello World!')
-    }
+    
   }
 }
 </script>
