@@ -7,7 +7,9 @@ export default async context => {
   const { app, router } = createApp()
 
   // 设置服务器端 router 的位置
-  router.push(context.url) //这里为啥要push url
+  router.push(context.url) // 服务端跳转到当前路由位置 push是去跳转
+
+
   // 可简单写为
   await new Promise(router.onReady.bind(router))
 
