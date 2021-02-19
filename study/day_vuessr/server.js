@@ -29,9 +29,11 @@ if(isProd){ // 生产
 }
 
 const render = (req, res) => {
-  renderer.renderToString({
-    title: '我是title'
-  },(err, html) => {
+  const context = {
+    title: '我是title',
+    url: req.url
+  };
+  renderer.renderToString(context,(err, html) => {
     if (err) {
       res.status(500).end('Internal Server Error')
       return;
@@ -40,8 +42,8 @@ const render = (req, res) => {
     res.end(html)
   });
 }
-
-server.get('/', isProd 
+// 设为'*'任何请求都会走这里
+server.get('*', isProd 
   ? render 
   : async (req, res) => {
     //等待构建完成执行render，利用Promise
