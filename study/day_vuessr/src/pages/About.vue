@@ -8,7 +8,12 @@
 export default {
   name: 'AboutPage',
   metaInfo: {
-    title: '关于'
+    title: '关于',
+    meta: [
+      {
+        content: 'Test meta'
+      }
+    ]
   }
 }
 </script>

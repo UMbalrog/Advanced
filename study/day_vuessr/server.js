@@ -30,7 +30,6 @@ if(isProd){ // 生产
 
 const render = (req, res) => {
   const context = {
-    title: '我是title',
     url: req.url
   };
   renderer.renderToString(context, (err, html) => {

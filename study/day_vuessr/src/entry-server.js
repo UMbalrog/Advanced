@@ -6,9 +6,12 @@ export default async context => {
   // 就已经准备就绪。
   const { app, router } = createApp()
 
+  const meta = app.$meta() // here
+
   // 设置服务器端 router 的位置
   router.push(context.url) // 服务端跳转到当前路由位置 push是去跳转
 
+  context.meta = meta // and here
 
   // 可简单写为
   await new Promise(router.onReady.bind(router))

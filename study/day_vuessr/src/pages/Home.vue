@@ -8,7 +8,12 @@
 export default {
   name: 'HomePage',
   metaInfo: {
-    title: '首页'
+    title: '首页',
+    meta: [
+      {
+        content: 'Test title',
+      }
+    ]
   }
 }
 </script>
