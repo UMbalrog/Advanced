@@ -17,11 +17,11 @@ export const createRouter = () => {
         name: 'about',
         component: () => import('@/pages/About')
       },
-      // {
-      //   path: '/posts',
-      //   name: 'post-list',
-      //   component: () => import('@/pages/Posts')
-      // },
+      {
+        path: '/posts',
+        name: 'post-list',
+        component: () => import('@/pages/Posts')
+      },
       {
         path: '*',
         name: 'error404',
