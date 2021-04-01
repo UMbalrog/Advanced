@@ -1,9 +1,10 @@
 import TinyReact from './TinyReact'
 
+const root = document.getElementById('root')
 const virtualDOM = (
   <div className="container">
     <h1>你好 Tiny React</h1>
-    <h2>(编码必杀技)</h2>
+    <h2 data-test="test">(编码必杀技)</h2>
     <div>
       嵌套1 <div>嵌套 1.1</div>
     </div>
@@ -14,6 +15,56 @@ const virtualDOM = (
     <button onClick={() => alert("你好")}>点击我</button>
     <h3>这个将会被删除</h3>
     2, 3
+    <input type="text" value="13" />
   </div>
 )
-console.log(virtualDOM)
+
+function Demo() {
+  return <div>Hello</div>
+}
+
+function Heart(props) {
+  return (
+    <div>
+      {props.title}
+      &hearts; <Demo />
+    </div>
+  )
+}
+
+// TinyReact.render(<Heart title="Hello React"/>, root);
+class Alert extends TinyReact.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: "Default Title"
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+  handleClick() {
+    this.setState({ title: "Changed Title" })
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps")
+  }
+  componentWillUpdate() {
+    console.log("componentWillUpdate")
+  }
+  componentDidUpdate() {
+    console.log("componentDidUpdate")
+  }
+  render() {
+    return (
+      <div>
+        {this.props.name}
+        {this.props.age}
+        <div>
+          {this.state.title}
+          <button >改变Title</button>
+        </div>
+      </div>
+    )
+  }
+}
+
+TinyReact.render(<Alert name="张三" age={20} />, root)
