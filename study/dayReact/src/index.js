@@ -19,6 +19,29 @@ const virtualDOM = (
   </div>
 )
 
+const modifyDOM = (
+  <div className="container">
+    <h1>你好 Tiny React</h1>
+    <h2 data-test="test123">(编码必杀技)</h2>
+    <div>
+      嵌套1 <div>嵌套 1.1</div>
+    </div>
+    <h3>(观察: 这个将会被改变)</h3>
+    {2 == 1 && <div>如果2和1相等渲染当前内容</div>}
+    {2 == 2 && <div>2</div>}
+    <span>这是一段被修改的内容</span>
+    <button onClick={() => alert("你好!!!!!")}>点击我</button>
+    <h5>这个将会被删除</h5>
+    <input type="text" value="13" />
+  </div>
+)
+
+// TinyReact.render(virtualDOM, root)
+
+// setTimeout(() => {
+//   TinyReact.render(modifyDOM, root)
+// }, 2000)
+
 function Demo() {
   return <div>Hello</div>
 }
@@ -35,7 +58,7 @@ function Heart(props) {
 // TinyReact.render(<Heart title="Hello React"/>, root);
 class Alert extends TinyReact.Component {
   constructor(props) {
-    super(props)
+    super(props) //传给父类
     this.state = {
       title: "Default Title"
     }
@@ -54,13 +77,14 @@ class Alert extends TinyReact.Component {
     console.log("componentDidUpdate")
   }
   render() {
+    console.log(this.state)
     return (
       <div>
         {this.props.name}
         {this.props.age}
         <div>
           {this.state.title}
-          <button >改变Title</button>
+          <button onClick={this.handleClick}>改变Title</button>
         </div>
       </div>
     )
@@ -68,3 +92,7 @@ class Alert extends TinyReact.Component {
 }
 
 TinyReact.render(<Alert name="张三" age={20} />, root)
+setTimeout(() => {
+  // TinyReact.render(<Alert name="李四" age={50} />, root)
+  TinyReact.render(<Heart title="我是Heart组件" />, root)
+}, 2000)
