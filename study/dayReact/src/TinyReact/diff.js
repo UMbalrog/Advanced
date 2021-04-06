@@ -40,7 +40,7 @@ export default function diff(virtualDOM, container, oldDOM) {
     }
 
     // 处理 key 的情况
-    // 1. 将拥有key属性的子元素放置在一个单独的对象中
+    // 1. 将拥有key属性的旧节点子元素放置在一个单独的对象中
     let keyedElements = {}
     for(let i=0, len=oldDOM.childNodes.length; i<len; i++){
       let domElement = oldDOM.childNodes[i]
@@ -82,13 +82,32 @@ export default function diff(virtualDOM, container, oldDOM) {
     // 判断旧节点的数量
     if (oldChildNodes.length > virtualDOM.children.length) {
       // 有节点需要被删除
-      for (
-        let i = oldChildNodes.length - 1;
-        i > virtualDOM.children.length - 1;
-        i--
-      ) {
-        unmountNode(oldChildNodes[i])
+      if (hasNoKey) { //没有key通过索引删除
+        for (
+          let i = oldChildNodes.length - 1;
+          i > virtualDOM.children.length - 1;
+          i--
+        ) {
+          unmountNode(oldChildNodes[i])
+        }
+      }else{ // 有key通过key删除
+        for (let i = 0; i < oldChildNodes.length; i++) {
+          let oldChild = oldChildNodes[i]
+          let oldChildKey = oldChild._virtualDOM.props.key
+          let found = false
+          for (let n = 0; n < virtualDOM.children.length; n++) {
+            if (oldChildKey === virtualDOM.children[n].props.key) {
+              found = true
+              break
+            }
+          }
+          if(!found){ //新列表中没有旧的节点的key说明被删除；
+            unmountNode(oldChild)
+          } 
+        }
+
       }
+      
     }
 
   }
