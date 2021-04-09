@@ -3,7 +3,8 @@ import {
   CreateTaskQueue, 
   arrified, 
   createStateNode, 
-  getTag
+  getTag,
+  getRoot
 } from "./Misc";
 
 // 任务队列
@@ -16,6 +17,12 @@ let pendingCommit = null;
 const commitAllWork = fiber => {
   // 循环 effects 数组，构建 DOM 节点树
   fiber.effects.forEach(item => {
+
+    if(item.tag === "class_component"){
+      item.stateNode.__fiber = item
+    }
+
+
     if(item.effectTag === "delete"){
       // 删除
       item.parent.stateNode.removeChild(item.stateNode);
@@ -131,6 +138,16 @@ const reconcileChildren = (fiber, children) => {
 const executeTask = fiber => {
   // 构建子级fiber
   if(fiber.tag === 'class_component'){ //类组价
+    // 类组件更新状态
+    if(fiber.stateNode.__fiber && fiber.stateNode.__fiber.partialState){
+      console.log(fiber.stateNode.__fiber)
+      // 如果有更新值则开始更新
+      fiber.stateNode.state = {
+        ...fiber.stateNode.state,
+        ...fiber.stateNode.__fiber.partialState
+      } 
+    }
+
     reconcileChildren(fiber, fiber.stateNode.render())
   }else if(fiber.tag === 'function_component'){
     reconcileChildren(fiber, fiber.stateNode(fiber.props))
@@ -165,6 +182,21 @@ const getFirstTask = () => {
   // 获取子任务
   const task = taskQueue.pop()
 
+  if(task.from === 'class_component'){
+    // 类组件更新时
+    let root = getRoot(task.instance); // 返回顶父级fiber
+    task.instance.__fiber.partialState = task.partialState
+    // 重新返回根节点
+    return {
+      props: root.props,
+      stateNode: root.stateNode,
+      tag: "host_root",
+      effects: [],
+      child: null,
+      alternate: root
+    }
+  }
+
   // 返回最外层节点的fiber对象
   return {
     props: task.props,
@@ -187,6 +219,7 @@ const workLoop = deadline => {
     subTask = executeTask(subTask)
   }
 
+  // 构建循环结束后执行渲染
   if(pendingCommit){
     commitAllWork(pendingCommit)
   }
@@ -218,5 +251,15 @@ export const render = (element, dom) => {
     props: { children: element }
   })
   // 指定在浏览器空闲的时间去执行任务构建Fiber数组
+  requestIdleCallback(performTask)
+}
+
+export const scheduleUpdate = (instance, partialState) => { //组件更新函数
+  taskQueue.push({
+    from: 'class_component',
+    instance,  //组件实例
+    partialState
+  })
+
   requestIdleCallback(performTask)
 }
