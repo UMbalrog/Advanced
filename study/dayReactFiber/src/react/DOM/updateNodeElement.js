@@ -8,12 +8,13 @@ export default function updateNodeElement(
   const oldProps = oldVirtualDOM.props || {}
 
   if (virtualDOM.type === "text") {
-    if (newProps.textContent !== oldProps.textContent) {
-      if (virtualDOM.parent.type !== oldVirtualDOM.parent.type) {
+    if (newProps.textContent !== oldProps.textContent) { //文本不同则更新
+      if (virtualDOM.parent.type !== oldVirtualDOM.parent.type) { //父级不同添加新文案
         virtualDOM.parent.stateNode.appendChild(
           document.createTextNode(newProps.textContent)
         )
       } else {
+        //父级相同替换文案
         virtualDOM.parent.stateNode.replaceChild(
           document.createTextNode(newProps.textContent),
           oldVirtualDOM.stateNode
