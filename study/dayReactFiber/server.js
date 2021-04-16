@@ -11,6 +11,6 @@ app.get('*', (req, res) => {
   res.end(templace)
 })
 
-app.listen(3000, () => {
-  console.log('localhost:3000')
+app.listen(3001, () => {
+  console.log('localhost:3001')
 })
