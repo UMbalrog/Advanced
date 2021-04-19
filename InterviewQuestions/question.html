@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 1、
+    let timer = null;
+    function mySetInterVal(fn, a, b) {
+    
+      timer = setTimeout(()=>{
+        fn()
+        timer = setTimeout(()=>{
+          fn()
+          timer = setTimeout(()=>{
+            fn()
+            a+2*b
+          }, a+b)
+        }, a+b)
+      }, a)
+    }
+
+    function myClear(timer) {
+      clearTimeout(timer);
+    }
+
+    // mySetInterVal(()=>console.log('执行了'), 2000, 2000)
+    // setTimeout(()=>{
+    //   myClear(timer);
+    // }, 7000)
+    
+    // 2、
+    let arr1 = [[1,2,3],[4,5,6],[7,8,9],[1,2,3],[4,5,6]];
+    let arr2 = [[1,4,6],[7,8,10],[2,6,9],[3,7,13],[1,5,12]];
+    mergeSort(arr1);
+    mergeSort(arr2);
+
+    function mergeSort (arr) {  
+      let el = arr.shift();
+      let newarr = [];
+      while(el){
+        newarr = newarr.concat(el);
+        el = arr.shift()
+      }
+      newarr.sort((a,b)=>a-b)
+      console.log(newarr)
+    }
+
+    
+
+  </script>
+</body>
+</html>
