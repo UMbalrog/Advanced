@@ -6,7 +6,7 @@ import * as couterActions from '../store/actions/counter.action'
 function Counter (props) {
   // console.log(props)
   return <div>
-    <button onClick={ () => { props.increment_async(20)} }>+</button>
+    <button onClick={ () => { props.increment(20)} }>+</button>
     <span>{props.count}</span>
     <button onClick={ () => { props.decrement(5)} }>-</button>
   </div>
