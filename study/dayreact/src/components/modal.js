@@ -16,7 +16,7 @@ function Modal ({showStatus, show, hide, show_async}) {
     display: showStatus ? 'block': 'none'
   }
   return <div>
-    <button onClick={show}>显示</button>
+    <button onClick={show_async}>显示</button>
     <button onClick={hide}>隐藏</button>
     <div style={styles}></div>
   </div>
