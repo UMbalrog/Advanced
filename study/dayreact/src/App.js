@@ -1,11 +1,13 @@
 import Counter from './components/Counter';
 import Modal from './components/modal';
+import Api from './components/reactApi';
 
 function App() {
   return (
     <div className="App">
-      <Counter />
-      <Modal/>
+      {/* <Counter />
+      <Modal/> */}
+      <Api/>
     </div>
   );
 }
