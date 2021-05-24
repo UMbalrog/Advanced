@@ -34,23 +34,69 @@
     // }, 7000)
     
     // 2、
-    let arr1 = [[1,2,3],[4,5,6],[7,8,9],[1,2,3],[4,5,6]];
-    let arr2 = [[1,4,6],[7,8,10],[2,6,9],[3,7,13],[1,5,12]];
-    mergeSort(arr1);
-    mergeSort(arr2);
+      let arr1 = [[1,2,3],[4,5,6],[7,8,9],[1,2,3],[4,5,6]];
+      let arr2 = [[1,4,6],[7,8,10],[2,6,9],[3,7,13],[1,5,12]];
+      // mergeSort(arr1);
+      // mergeSort(arr2);
 
-    function mergeSort (arr) {  
-      let el = arr.shift();
-      let newarr = [];
-      while(el){
-        newarr = newarr.concat(el);
-        el = arr.shift()
+      function mergeSort (arr) {  
+        let el = arr.shift();
+        let newarr = [];
+        while(el){
+          newarr = newarr.concat(el);
+          el = arr.shift()
+        }
+        newarr.sort((a,b)=>a-b)
+        console.log(newarr)
       }
-      newarr.sort((a,b)=>a-b)
-      console.log(newarr)
+
+    // 3、问题，'(',')','{','}'
+
+    function s (str) {  
+      // 判断是否为偶数
+      // if(str && str.length%2 == 0){
+        let count = 0;
+        let length = str.length;
+        //循环替换，最大次数为s.length()/2
+        while(count<length/2){
+          str = str.replace("{}","").replace("[]","").replace("()","");
+          count++;
+        }
+        return str.length == 0
+      // }else{
+      //   return false
+      // }
     }
 
-    
+    function s2 (str) {  
+      // 判断是否为偶数
+      let arr = [];
+      let strArr = str.split('');
+      console.log(strArr);
+      for(let i=0; i<strArr.length; i++){
+        let ele = strArr[i];
+        if(ele == '('){
+          arr.push(')');
+        }else if(ele == '['){
+          arr.push(']');
+        }else if(ele == '{'){
+          arr.push('}');
+        }else if(arr.length == 0 || arr.pop() != ele){
+          return false
+        }else{
+          console.log(ele);
+        }
+
+      };
+      return arr.length == 0;
+    }
+
+    console.log("(", s("("))
+    console.log("()", s("()"))
+    console.log("()[]{}", s("()[]{}"))
+    console.log("{)(]", s("{)(]"))
+    console.log("[()]", s("[()]"))
+    console.log("([])", s("([])"))
 
   </script>
 </body>
