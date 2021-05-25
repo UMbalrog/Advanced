@@ -91,13 +91,65 @@
       return arr.length == 0;
     }
 
-    console.log("(", s("("))
-    console.log("()", s("()"))
-    console.log("()[]{}", s("()[]{}"))
-    console.log("{)(]", s("{)(]"))
-    console.log("[()]", s("[()]"))
-    console.log("([])", s("([])"))
+    // console.log("(", s("("))
+    // console.log("()", s("()"))
+    // console.log("()[]{}", s("()[]{}"))
+    // console.log("{)(]", s("{)(]"))
+    // console.log("[()]", s("[()]"))
+    // console.log("([])", s("([])"))
 
+    // 4、聊表反转
+
+    //节点构造函数
+    function Node(val){
+      this.val = val
+      this.next = null
+    }
+    //定义链表
+    function List(array){
+        this.head = null
+        let i = 0,temp = null
+        while(i < array.length){
+            if( i === 0){
+                this.head = new Node(array[i])
+                temp = this.head
+            }else{
+                let newNode = new Node(array[i])
+                temp.next = newNode
+                temp = temp.next
+            }
+            i++
+        }
+    }
+    //遍历链表
+    function traverseList(listHead){
+        while(listHead){
+            console.log(listHead.val)    
+            listHead = listHead.next
+        }
+    }
+
+    let arrL = [1,2,3,4,5,6];
+    let Linked = new List(arrL).head; // 链表
+    traverseList(Linked);
+    //反转列表
+    function reversal(listHead) {  
+      let pre = null, next = null;
+      while(listHead){
+        // 保存下一个节点
+        next = listHead.next;
+        // 将下个节点指向 前一个节点
+        listHead.next = pre;
+        // 赋值前一个节点
+        pre = listHead;
+        // 移动下一个节点继续循环
+        listHead = next;
+      }
+      return pre;
+    }
+
+    console.log(reversal(Linked));
+    
   </script>
 </body>
 </html>
