@@ -7,10 +7,50 @@
   <title>Document</title>
 </head>
 <body>
-  去跳转
-  <iframe src="sinaweibo://gotohome" style="display: none;"></iframe>
   <script>
-    window.location.href = 'sinaweibo://gotohome'
+    // 两数之和
+    let nums = [2,7,11,15], target = 9;
+    // [0,1]
+
+    var twoSum = function(nums, target) {
+      let obj = {}
+      nums.forEach((element, k) => {
+        obj[element] = k;
+      });
+      for(let i=0; i<nums.length; i++){
+        let yu = target - nums[i];
+        if(obj[yu] > -1 && i != obj[yu]){
+          return [i, obj[yu]];
+        }
+      };
+    };
+    console.log(twoSum(nums, target));
+
+    // 最长字符子串
+    let str1 = "abcabcbb";
+
+    function longest (str) {
+      let list = new Set();
+      let len = str.length;
+      let arr = str.split('');
+      let neind = 0;
+      for(let i=0; i<len; i++){
+      
+      }
+
+    }
+    console.log(longest(str1));
+
+    // 正则表达式匹配
+    var isMatch = function(s, p) {
+      if(p.indexOf('*') < 0 && p.indexOf('.') < 0){
+        // 没有匹配付
+        return s === p;
+      }else{
+        
+      }
+    };
+    isMatch("aa","a")
   </script>
 </body>
 </html>
