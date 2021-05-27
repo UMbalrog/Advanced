@@ -50,7 +50,28 @@
         
       }
     };
-    isMatch("aa","a")
+    // isMatch("aa","a");
+
+
+
+    function isContain(a1,b1) {
+      let arr = b1.split(a1);
+      console.log(arr)
+      if(arr.length > 1){
+        return arr[0].length
+      }else{
+        return -1;
+      }
+      
+    };
+    // let a1='34', b1='1234567'; // 返回 2
+    // let a1='35', b1='1234567'; // 返回 -1
+    let a1='355', b1='12354355'; // 返回 5
+    console.log(isContain(a1,b1));
+    let str2 = 'abcdefghijklmnopqrstuvwxyz';
+    console.log(str2.charAt(3))
+
+
   </script>
 </body>
 </html>
