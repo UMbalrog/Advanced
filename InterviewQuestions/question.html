@@ -50,26 +50,21 @@
         console.log(newarr)
       }
 
-    // 3、问题，'(',')','{','}'
+    // 1、给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 
     function s (str) {  
       // 判断是否为偶数
-      // if(str && str.length%2 == 0){
-        let count = 0;
-        let length = str.length;
-        //循环替换，最大次数为s.length()/2
-        while(count<length/2){
-          str = str.replace("{}","").replace("[]","").replace("()","");
-          count++;
-        }
-        return str.length == 0
-      // }else{
-      //   return false
-      // }
+      let count = 0;
+      let length = str.length;
+      //循环替换，最大次数为s.length()/2
+      while(count<length/2){
+        str = str.replace("{}","").replace("[]","").replace("()","");
+        count++;
+      }
+      return str.length == 0
     }
 
-    function s2 (str) {  
-      // 判断是否为偶数
+    function s2 (str) { 
       let arr = [];
       let strArr = str.split('');
       console.log(strArr);
@@ -98,7 +93,7 @@
     // console.log("[()]", s("[()]"))
     // console.log("([])", s("([])"))
 
-    // 4、聊表反转
+    // 4、链表反转
 
     //节点构造函数
     function Node(val){
