@@ -56,12 +56,12 @@
     function side(arr) {
       arr[0] = arr[2];
     }
-    function a(a, b, c = 3) {
-      c = 10;
-      console.log(arguments);
-      side(arguments); // 这里 a，c的值不管怎么改变都是不会改变的 
-      return a + b + c;
-    }
+    // function a(a, b, c = 3) {
+    //   c = 10;
+    //   console.log(arguments);
+    //   side(arguments); // 这里 a，c的值不管怎么改变都是不会改变的 
+    //   return a + b + c;
+    // }
     // console.log(a(1, 1, 1));  // 21
 
      
@@ -75,7 +75,7 @@
       },
       baz:1 
     }
-    console.log(typeof (foo.bar=foo.bar)());
+    // console.log(typeof (foo.bar=foo.bar)());
 
 
 
@@ -95,6 +95,37 @@
     // console.log(isContain(a1,b1));
     let str2 = 'abcdefghijklmnopqrstuvwxyz';
     // console.log(str2.charAt(3))
+    // let a1='355', b1='12354355'; // 返回 5
+    // console.log(isContain(a1,b1));
+    // let str2 = 'abcdefghijklmnopqrstuvwxyz';
+    // console.log(str2.charAt(3))
+
+
+     
+    // for (let i = 0; i < 3; i++) { 
+    //   setTimeout(() => console.log(i), 1);
+    // }
+
+    const num = { 
+      a: 10,
+      add() {
+        return this.a + 2;
+      },
+      reduce: () => {
+        console.log(this.a);
+        return this.a -2;
+      } 
+    };
+    // console.log(num.add()); 
+    // console.log(num.reduce());
+
+     
+    const person = { name: "yideng" };
+    function sayHi(age) {
+      return `${this.name} is ${age}`;
+    }
+    console.log(sayHi.call(person, 5)); 
+    console.log(sayHi.bind(person)());
 
 
     // 柯里化，经典题，哎
