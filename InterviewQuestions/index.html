@@ -120,10 +120,20 @@
     function sayHi(age) {
       return `${this.name} is ${age}`;
     }
-    console.log(sayHi.call(person, 5)); 
-    console.log(sayHi.bind(person)());
+    // console.log(sayHi.call(person, 5)); 
+    // console.log(sayHi.bind(person)());
 
 
+    var reverse = function(x) {
+      let arr = String(x).split('');
+      let arr1 = arr.reverse().join('').replace(/-/g, '');
+
+      // if()-2*31 <= arr1⋅10+digit≤231−1
+
+      return x < 0 ? Number(arr1)*-1 : Number(arr1);
+    };
+
+    console.log(reverse(0));
   </script>
 </body>
 </html>
