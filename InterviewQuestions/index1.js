@@ -41,3 +41,13 @@ function b(arr) {
 }
 
 console.log(b([1,43,65,56,65,23,12]));
+
+
+
+function cssStyle2DomStyle(sName) {
+  return sName.replace(/^-/, '').replace(/-([a-z])/g, (_, $) => {
+    return $.toUpperCase()
+  });
+}
+
+console.log(cssStyle2DomStyle('font-size-auto'));
