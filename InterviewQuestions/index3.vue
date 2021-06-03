@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="box">
-      <canvas width="200" height="200" ref="can">
+      <canvas width="600" height="600" ref="can">
 
       </canvas>
     </div>
   </div>
 </template>
 <script>
-const rem = 1, r = 100;
+const rem = 1, r = 300;
 export default {
   name: 'canvas',
   data() {
@@ -28,21 +28,7 @@ export default {
   },
   methods:{
     create() {
-      // let ctx = this.ctx;
-      // if(ctx){
-      //   ctx.translate(100,100);
-      //   ctx.clearRect(-200,-200,200,200);
-      //   ctx.save();
-      //   ctx.beginPath();
-      //   ctx.rotate(s*Math.PI/100);
-      //   ctx.strokeStyle='black';
-      //   ctx.lineWidth=4;
-      //   ctx.moveTo(0,0);
-      //   ctx.lineTo(0,80);
-      //   ctx.stroke();
-      //   ctx.closePath();
-      //   ctx.restore();
-      // }else{
+      
       let canvas = this.$refs['can'];
       // var canvas = document.getElementById('canvas');
       if (canvas.getContext) {
@@ -50,46 +36,50 @@ export default {
         // this.ctx.save(); //保存当前环境的状态
         this.ctx.translate(r,r); 
       }
-      
-          // ctx.clearRect(0,0,200,200);
-          // ctx.strokeStyle = 'red';
-          // ctx.beginPath();
-          // ctx.moveTo(100, 100);
-          // ctx.lineTo(100, 20);
-          // ctx.stroke();
-
-          // ctx.strokeStyle = '#00f';
-          // ctx.beginPath();
-          // ctx.moveTo(100, 100);
-          // ctx.lineTo(100, 40);
-          // ctx.stroke();
-      
 
     },
-    drawHour(hour, minute) {//画时针
+    drawBackground() {
+      let hourNumbers=[3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2];//12个小时画圆时使用的数组，圆形是从3的位置为起始位置开始顺时针来画的
+      this.ctx.save();//保存当前环境的状态
+      // this.ctx.beginPath();//重置当前路径
+      hourNumbers.forEach((number,i) => {
+        // this.ctx.beginPath();//重置当前路径
+        var rad =2 * Math.PI /12 * i;//先求出每个点的弧度 sin和cos使用的是弧度的值
+        var x=Math.cos(rad) * (r-30*rem);
+        var y=Math.sin(rad) * (r-30*rem);
+    
+        this.ctx.fillText(number, x, y);//方法在画布上绘制填色的文本。文本的默认颜色是黑色。为每个坐标x和y上的设置数值number
+      
+      
+      });
+      // this.ctx.restore();//返回之前保存过的路径状态和属性
+    },
+    drawHour(hour, minute, second) {//画时针
       let ctx = this.ctx;
       ctx.save();//保存当前环境的状态
       ctx.beginPath();//重置当前路径
-      var rad=2*Math.PI / 12 *hour;//求出每小时所对应的弧长
-      var mrad=2*Math.PI /12/ 60 *minute;//求出每分钟对应的弧长
-      ctx.rotate(rad+mrad);//旋转当前的绘图
+      var rad= 2*Math.PI /12 * hour;//求出每小时所对应的弧长
+      var mrad= 2*Math.PI /12/60 *minute;//求出每分钟对应的弧长
+      var sec= 2*Math.PI /12/60/60 *second;//求出每分钟对应的弧长
+      ctx.rotate(rad+mrad+sec);//旋转当前的绘图
       ctx.lineWidth=6*rem;//设置当前的线条宽度
-      ctx.lineCap="round";//设置或返回线条末端线帽的样式为圆形
+      // ctx.lineCap="round";//设置或返回线条末端线帽的样式为圆形
       ctx.moveTo(0, 10*rem);//设置要画的开始位置
       ctx.lineTo(0, -r/2);//设置结束的位置  因为设置坐标原点为（r，r），所以向上为负值
       ctx.stroke();//绘制图形
       ctx.restore();//返回之前保存过的路径状态和属性
     },
-    drawMintue(minute) {//画分针  和时针画法相同
+    drawMintue(minute, second) {//画分针  和时针画法相同
       let ctx = this.ctx;
       ctx.save();
       ctx.beginPath();
-      var rad= 2*Math.PI / 60 * minute;
-      ctx.rotate(rad);
+      var rad= Math.PI / 30 * minute;
+      var sec= Math.PI / 30/ 60 * second;
+      ctx.rotate(rad+sec);
       ctx.lineWidth=3*rem;
       ctx.lineCap="round";
       ctx.moveTo(0, 10*rem);
-      ctx.lineTo(0, -r+30*rem);
+      ctx.lineTo(0, -r+20*rem);
       ctx.stroke();
       ctx.restore();
     },
@@ -98,15 +88,14 @@ export default {
       ctx.save();
       ctx.beginPath();
       ctx.fillStyle='red';
-      var rad= 2*Math.PI / 60 *second;
+      var rad = Math.PI / 30 * second;
       ctx.rotate(rad);
-      ctx.lineWidth=3*rem;
-      ctx.moveTo(0, 20*rem);
-      // ctx.lineTo(2*rem, 20*rem);
+      ctx.moveTo(-2*rem, 20*rem);
+      ctx.lineTo(2*rem, 20*rem);
       ctx.lineTo(0, -r+18*rem);
-      // ctx.lineTo(-1, -r+18*rem);
-      // ctx.fill();
-      ctx.stroke();
+      ctx.lineTo(-1, -r+18*rem);
+      ctx.fill();
+      // ctx.stroke();
       ctx.restore();
     },
     drawDot() {//画出中间的小圆点相当于设置一个让三个针固定的螺丝
@@ -119,14 +108,14 @@ export default {
     },
     draw() {//把三个指针放在这个函数中
       let ctx = this.ctx;
-      ctx.clearRect(-100, -100, 200, 200);//清除指针运动时留下的轨迹
+      ctx.clearRect(-300, -300, 600, 600);//清除指针运动时留下的轨迹
       var now=new Date();
       var hour= now.getHours();//获取当前小时
       var minute=now.getMinutes();//获取分钟
       var second=now.getSeconds();//获取秒
-      // drawBackground();	//调用函数
-      this.drawHour(hour, minute);
-      this.drawMintue(minute);
+      this.drawBackground();	//调用函数
+      this.drawHour(hour, minute, second);
+      this.drawMintue(minute, second);
       this.drawSecond(second);
       this.drawDot();
       ctx.restore();//返回之前保存过的路径状态和属性
@@ -146,8 +135,8 @@ export default {
 </script>
 <style scoped>
 .box{
-  width: 200px;
-  height: 200px;
+  width: 600px;
+  height: 600px;
   border-radius: 50%;
   border: 1px solid #000;
 }
