@@ -211,9 +211,36 @@
       return c;
     }
 
-    console.log(jumpFloor(5));
+    // console.log(jumpFloor(5));
 
     // 最长无重复子数组
+    function maxLength( arr ) {
+      let len = arr.length, res = {}, max = 1;
+      for(let start=0, end = 0; end<len; end++){
+        if(typeof res[arr[end]] != 'undefined'){
+          start = Math.max(start, res[arr[end]]+1);
+        }
+        max = Math.max(max, end-start+1)
+        res[arr[end]] = end;
+      }
+      return max;
+    }
+
+    // console.log(maxLength([2,2,3,4,8,99,3]));
+
+    // 子数组的最大累加和问题
+    function maxsumofSubarray( arr ) {
+      let m = arr[0]; // 保存最大累加和
+      for(let i = 1 ; i<arr.length ; i++)
+      {
+          arr[i] = Math.max(arr[i] , arr[i-1]+arr[i]);
+          m = Math.max(m, arr[i]);
+      }
+      return m;
+    }
+
+    console.log(maxsumofSubarray([1,234,34.-2]))
+
     
   </script>
 </body>
