@@ -142,13 +142,14 @@
     // 柯里化，经典题，哎
 
     function sum() {
+      console.log('执行了')
       let args = Array.prototype.slice.apply(arguments);
 
       function sums () {
         args.push(...Array.prototype.slice.apply(arguments));
         return sums
       }
-
+      
       sums.toString = function () {
         return args.reduce((a,b) => a+b, 0);
       }
@@ -156,18 +157,9 @@
       return sums
     }
 
-    // console.log(sum(1));
-    // console.log(sum(2,3)(3));
-    // console.log(sum(2)(3)(4));
-
-
-    var bb = 1;
-    function aa(bb) {
-        bb = 2;
-        alert(bb);
-    };
-    aa(bb);
-    alert(bb);
+    console.log(sum(1));
+    console.log(sum(2,3)(3));
+    console.log(sum(2)(3)(4));
 
   </script>
 </body>

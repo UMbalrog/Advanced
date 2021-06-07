@@ -10,9 +10,9 @@ function a (arr) {
   let arrm = [];
   for(let i=0; i<len; i++){
     if(arr[i] > num ){
-      arrr.push(arr[i]);
-    }else if(arr[i] < num){
       arrl.push(arr[i]);
+    }else if(arr[i] < num){
+      arrr.push(arr[i]);
     }else{
       arrm.push(arr[i]);
     }
@@ -22,7 +22,7 @@ function a (arr) {
   
 }
 
-// console.log(a([1,43,65,56,65,23,12]));
+console.log(a([1,43,65,56,65,23,12]));
 
 // 冒泡排序
 function b(arr) {
@@ -40,14 +40,31 @@ function b(arr) {
   return arr;
 }
 
-console.log(b([1,43,65,56,65,23,12]));
+// console.log(b([1,43,65,56,65,23,12]));
 
-
-
+// 转为驼峰式
 function cssStyle2DomStyle(sName) {
   return sName.replace(/^-/, '').replace(/-([a-z])/g, (_, $) => {
     return $.toUpperCase()
   });
 }
 
-console.log(cssStyle2DomStyle('font-size-auto'));
+// console.log(cssStyle2DomStyle('font-size-auto'));
+
+// new Promise((reslove, reject) => {
+//   // reslove();
+//   reject();
+// }).then(() => {
+//   console.log('reslove1');
+// }, () => {
+//   console.log('reject');
+//   return new Promise((reslove, reject) => {
+//     reslove('33');
+//     // reject('22');
+//   })
+// }).catch((err) => {
+//   console.log('catch', err);
+//   return 'bbbb'
+// }).then((res) => {
+//   console.log('reslove2', res);
+// })

@@ -126,7 +126,7 @@
 
     let arrL = [1,2,3,4,5,6];
     let Linked = new List(arrL).head; // 链表
-    traverseList(Linked);
+    // traverseList(Linked);
     //反转列表
     function reversal(listHead) {  
       let pre = null, next = null;
@@ -151,8 +151,70 @@
     //   phead = next; // 继续之后的循环；
     // }
 
-    console.log(reversal(Linked));
+    // console.log(reversal(Linked));
 
+
+    // 求二叉树的层序遍历 
+    function levelOrder( root ) {
+      if(!root || !root.val){return []};
+      let arr = [], arr1 = [];
+      arr.push(root);
+      while(arr.length){
+        let temp = [];
+        let len = arr.length;
+        while(len--){
+          let val = arr.shift();
+          temp.push(val.val);
+          val.left && arr.push(val.left);
+          val.right && arr.push(val.right);
+        }
+        arr1.push(temp);
+      }
+      return arr1;
+    }
+
+    // console.log(levelOrder({}));
+
+    // 实现二叉树先序，中序和后序遍历
+    function threeOrders( root ) {
+      let pre = [], order = [], post = [];
+      function find(tree) {
+        if(!tree){return null}
+        pre.push(tree.val);
+        find(tree.left);
+        order.push(tree.val);
+        find(tree.right);
+        post.push(tree.val);
+      }
+      find(root);
+      return [pre, order, post];
+    }
+ 
+    // 跳台阶问题
+    function jumpFloor(number) {
+      if(number <= 1 ){
+        return 1;
+      }
+      return jumpFloor(number-1) + jumpFloor(number-2)
+    }
+
+    function jumpFloor1(number) {
+      if(number <= 1 ){
+        return 1;
+      }
+      let a = 1, b = 1, c = 0;
+      for(let i=2; i<=number; i++){
+        c = a + b;
+        a = b;
+        b = c;
+      }
+      return c;
+    }
+
+    console.log(jumpFloor(5));
+
+    // 最长无重复子数组
+    
   </script>
 </body>
 </html>
