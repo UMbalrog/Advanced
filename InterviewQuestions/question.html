@@ -230,7 +230,7 @@
 
     // 子数组的最大累加和问题
     function maxsumofSubarray( arr ) {
-      let m = arr[0]; // 保存最大累加和
+      let m = arr[0]; // 保存最大累加和 每次累加保存最大值
       for(let i = 1 ; i<arr.length ; i++)
       {
           arr[i] = Math.max(arr[i] , arr[i-1]+arr[i]);
@@ -241,7 +241,54 @@
 
     console.log(maxsumofSubarray([1,234,34.-2]))
 
-    
+    // 判断链表中是否有环
+    function hasCycle( head ) { 
+      // 快慢指针法
+      if(head == null){return false};
+      let slow = head;
+      let fast = head;
+      while(fast != null && fast.next != null){
+          slow = slow.next;
+          fast = fast.next.next;
+          if(slow == fast){ // 相遇
+              return true
+          }
+      }
+      return false;
+    }
+
+    // 链表中环的入口节点
+    function detectCycle( head ) {
+        // 快慢指针法
+      if(head == null){return null};
+      let slow = head;
+      let fast = head;
+      while(fast != null && fast.next != null){
+          slow = slow.next;
+          fast = fast.next.next;
+          if(slow == fast){ // 相遇,
+              // 从相遇节点开始，两个指针速度相同，一个从相遇点开始，一个从开始节点开始，直到再次相遇的时候，就是循环入口点
+              let slow2 = head;
+              while(slow2 != slow){
+                  slow2 = slow2.next;
+                  slow = slow.next;
+              }
+              return slow2
+          }
+      }
+      return null;
+    }
+
+    // 合并两个有序的数组, A比B大
+    function merge( A, m, B, n ) {
+      let i = m - 1;
+      let j = n - 1;
+      let max = m + n - 1;//AB合并后最后一个元素所在位置
+      while(i >= 0 && j >= 0)//AB合并，谁大就先放谁
+        A[max--] = A[i] > B[j] ? A[i--] : B[j--];
+      while(j >= 0)//如果B没有遍历完，那么之间丢在A数组里面
+        A[max--] = B[j--];
+    }
   </script>
 </body>
 </html>
