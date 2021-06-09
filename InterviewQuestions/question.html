@@ -239,7 +239,7 @@
       return m;
     }
 
-    console.log(maxsumofSubarray([1,234,34.-2]))
+    // console.log(maxsumofSubarray([1,234,34.-2]))
 
     // 判断链表中是否有环
     function hasCycle( head ) { 
@@ -289,6 +289,84 @@
       while(j >= 0)//如果B没有遍历完，那么之间丢在A数组里面
         A[max--] = B[j--];
     }
+
+    // 两数之和
+    function twoSum( numbers ,  target ) {
+      let len = numbers.length, obj = {};
+      for(let i=0; i<len; i++){
+        obj[numbers[i]] = i + 1;
+      }
+      for(let j=0; j<len; j++){
+        let num = target - numbers[j];
+        if(obj[num] && obj[num] != (j+1)){
+          return [j+1, obj[num]];
+        }
+      }
+    }
+
+    // console.log(twoSum([ 70, 110, 20, 150],90))
+
+    // 组合继承
+    function Animal(name) {
+      this.name = name || '';
+    }
+
+    // function Dog() {
+    //   Animal.call(this);
+    //   this.eat = msg => {
+    //     return msg
+    //   }
+    // }
+    // Dog.prototype = new Animal();
+    // Dog.prototype.constructor = Dog;
+
+    // 类的继承
+    // class Animal {
+    //   constructor() {
+
+    //   }
+    // }
+  
+    class Dog extends Animal{
+      constructor(name) {
+        super(name)
+      }
+      eat(msg) {
+        return msg
+      }
+    }
+    let dog = new Dog();
+    
+    // console.log(dog.eat('shifu'))
+    // console.log(dog instanceof Dog)
+    // console.log(dog instanceof Animal)
+
+    // 删除链表的倒数第n个节点
+    function removeNthFromEnd( head ,  n ) {
+      let fast = head, slow = head, pre = head;
+      // 利用快慢指针，快指针从n位置出发 两指针相同速度走，知道快指针到了尾部，慢指针正好在，倒数n的位置
+      for(let i=0; i<n; i++){
+          fast = fast.next;
+      }
+      while(fast){
+          fast = fast.next;
+          pre = slow;
+          slow = slow.next;
+      }
+      // 记录了 n 前一个位置，然后跳过n直到下一个，判断一下是否是头部节点。
+      let target;
+      if(slow != head){
+          target = pre.next;
+          pre.next = target.next;
+      }else{
+          target = head;
+          head = head.next;
+      }
+      return head
+    }
+
+    
+
   </script>
 </body>
 </html>
