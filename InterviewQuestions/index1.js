@@ -22,7 +22,7 @@ function a (arr) {
   
 }
 
-console.log(a([1,43,65,56,65,23,12]));
+// console.log(a([1,43,65,56,65,23,12]));
 
 // 冒泡排序
 function b(arr) {
@@ -68,3 +68,25 @@ function cssStyle2DomStyle(sName) {
 // }).then((res) => {
 //   console.log('reslove2', res);
 // })
+
+let arr = [];
+function Num(totals) {
+  totals = Number(totals);
+  let integer = Math.floor(totals/200);
+  let remainder = totals%200;
+  for(let i=0; i<integer; i++){
+    arr.push({
+      label: (i*200+1) +'--'+ ((i+1)*200),
+      value: i+1
+    })
+  }
+  if(remainder > 0){
+    let aaa = arr.push({
+      label: (integer*200+1) +'--'+ (integer*200+remainder),
+      value: integer+1
+    })
+    console.log(aaa)
+  }
+  return arr
+}
+console.log(Num('801'))

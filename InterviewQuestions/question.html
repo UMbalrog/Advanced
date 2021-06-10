@@ -226,7 +226,7 @@
       return max;
     }
 
-    // console.log(maxLength([2,2,3,4,8,99,3]));
+    console.log(maxLength([2,2,3,4,8,99,3]));
 
     // 子数组的最大累加和问题
     function maxsumofSubarray( arr ) {
@@ -365,8 +365,68 @@
       return head
     }
 
-    
+    // 最长公共子串
+    function LCS( str1 ,  str2 ) {
+      let len = str1.length;
 
+      for(let start = 0, end = 1; end<len; end++){
+        let str = str1.slice(start, end)
+        if(str2.indexOf(str) > -1){
+
+        }
+      }
+
+
+    }
+
+    // 不行
+    function zigzagLevelOrder( root ) {
+      if(!root){return []};
+      let arr = [], arr2 = [], num = 0;
+      arr.push(root);
+      while(arr.length > 0) {
+          let temp = [];
+          let len = arr.length;
+          for(let i=0; i<len; i++){
+              let value = arr.shift();
+              temp.push(value.val);
+              console.log(num);
+              if(num%2 == 1){
+                  value.left && arr.push(value.left);
+                  value.right && arr.push(value.right);
+              }else{
+                  value.right && arr.push(value.right);
+                  value.left && arr.push(value.left);
+              }
+             
+          }
+          num += 1;
+          arr2.push(temp);
+      }
+      return arr2
+    } 
+    
+    console.log(zigzagLevelOrder({
+  val: 1,
+  left: {
+    val: 2,
+    left: {
+      val: 4,
+      left: null,
+      right: null
+    },
+    right: {
+      val: 5,
+      left: null,
+      right: null
+    }
+  },
+  right: {
+    val: 3,
+    left: null,
+    right: null
+  }
+}))
   </script>
 </body>
 </html>
