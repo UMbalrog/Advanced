@@ -226,7 +226,7 @@
       return max;
     }
 
-    console.log(maxLength([2,2,3,4,8,99,3]));
+    // console.log(maxLength([2,2,3,4,8,99,3]));
 
     // 子数组的最大累加和问题
     function maxsumofSubarray( arr ) {
@@ -406,27 +406,70 @@
       return arr2
     } 
     
-    console.log(zigzagLevelOrder({
-  val: 1,
-  left: {
-    val: 2,
-    left: {
-      val: 4,
-      left: null,
-      right: null
-    },
-    right: {
-      val: 5,
-      left: null,
-      right: null
+    // console.log(zigzagLevelOrder({
+    //   val: 1,
+    //   left: {
+    //     val: 2,
+    //     left: {
+    //       val: 4,
+    //       left: null,
+    //       right: null
+    //     },
+    //     right: {
+    //       val: 5,
+    //       left: null,
+    //       right: null
+    //     }
+    //   },
+    //   right: {
+    //     val: 3,
+    //     left: null,
+    //     right: null
+    //   }
+    // }))
+
+    // 螺旋矩阵
+    function spiralOrder( matrix ) {
+      // write code here
+      let arr = [], top = 0, left = 0, right = matrix[0].length - 1, bottom = matrix.length - 1;
+      while(top < (matrix.length+1)/2 && left < (matrix[0].length+1)/2){
+        // 左到右
+        for(let i= left; i<=right; i++){
+          arr.push(matrix[top][i]);
+        }
+        top++;
+        // 上到下
+        for(let i=top; i<=bottom; i++){
+          arr.push(matrix[i][right]);
+        }
+        right--;
+        // 右到左
+        if(top != bottom){
+          for(let i=right; i>=left; i--){
+            arr.push(matrix[bottom][i]);
+          }
+        }
+        bottom--;
+        // 下到上
+        if(left != right){
+          for(let i=bottom; i>=top+1; i--){
+            arr.push(matrix[i][left]);
+          }
+        }
+        left++;
+        
+      }
+      return arr;
+
     }
-  },
-  right: {
-    val: 3,
-    left: null,
-    right: null
-  }
-}))
+
+    console.log(spiralOrder([
+      [1,2,3],
+      [4,5,6]
+    ]));
+
+
+
   </script>
 </body>
 </html>
