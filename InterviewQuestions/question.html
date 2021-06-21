@@ -432,7 +432,7 @@
     function spiralOrder( matrix ) {
       // write code here
       let arr = [], top = 0, left = 0, right = matrix[0].length - 1, bottom = matrix.length - 1;
-      while(top < (matrix.length+1)/2 && left < (matrix[0].length+1)/2){
+      while(top <= bottom && left <= right){
         // 左到右
         for(let i= left; i<=right; i++){
           arr.push(matrix[top][i]);
@@ -444,15 +444,15 @@
         }
         right--;
         // 右到左
-        if(top != bottom){
+        if(top <= bottom){
           for(let i=right; i>=left; i--){
             arr.push(matrix[bottom][i]);
           }
         }
         bottom--;
         // 下到上
-        if(left != right){
-          for(let i=bottom; i>=top+1; i--){
+        if(left <= right){
+          for(let i=bottom; i>=top; i--){
             arr.push(matrix[i][left]);
           }
         }
@@ -463,10 +463,35 @@
 
     }
 
-    console.log(spiralOrder([
+    // console.log(spiralOrder([
+    //   [1,2,3],
+    //   [4,5,6]
+    // ]));
+
+    // 顺时针旋转矩阵
+    function rotateMatrix(mat, n) {
+
+      let len = mat.length - 1, b = len , arr = [];
+      // (i,i) => (j, len-i)
+      while(b >= 0){
+        arr.push([]);
+        b--;
+      }
+
+      for(let i=0; i<=len; i++){
+        for(let j=0; j<=len; j++){
+          arr[j][len-i] = mat[i][j];
+        }
+      }
+      return arr;
+    }
+   
+
+    console.log(rotateMatrix([
       [1,2,3],
-      [4,5,6]
-    ]));
+      [4,5,6],
+      [7,8,9]
+    ],3 ))
 
 
 
