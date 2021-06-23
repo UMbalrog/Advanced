@@ -522,9 +522,51 @@
       { id: 1003, parentId: 0 }
     ];
 
-    console.log(tree(data))
+    // console.log(tree(data))
+    
+    // 两个大数相加；
+    function solve( s ,  t ) {
+      let slen = s.length-1, tlen = t.length-1, carry = 0, str = '';
+      while(slen >= 0 || tlen >= 0 || carry != 0){
+        let x = slen < 0 ? 0 : (s.charAt(slen--) - 0);
+        let y = tlen < 0 ? 0 : (t.charAt(tlen--) - 0);
+        let num = x + y + carry;
+        str = (num%10) + str;
+        carry = parseInt(num/10);
+      }
+      return str;
+    }
+    
+    // 盛水问题
+    function maxWater( arr ) {
+    // write code here
+      let len = arr.length;
+      if(len < 3){return 0};
+      let left = 0, right = len-1, num = 0;
+      let min = Math.min(arr[left], arr[right]);
+      while(left < right){
+        if(arr[left] < arr[right]){ 
+          // 左侧开始
+          left ++;
+          if(arr[left] < min){
+            num += min - arr[left];
+          }else{
+            min = Math.min(arr[left], arr[right]);
+          }
+        }else{
+          // 左侧开始
+          right --;
+          if(arr[right] < min){
+            num += min - arr[right];
+          }else{
+            min = Math.min(arr[left], arr[right]);
+          }
+        }
+      }
+      return num;
+    }
 
-
+    console.log(maxWater([3,1,2,5,2,4]))
   </script>
 </body>
 </html>
