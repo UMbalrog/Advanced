@@ -566,7 +566,24 @@
       return num;
     }
 
-    console.log(maxWater([3,1,2,5,2,4]))
+    // console.log(maxWater([3,1,2,5,2,4]))
+
+    // A instanceof B实现 
+    // 检测A是不是B的实例， 也就是B的原型在不在A的原型链上。
+    function myin(inst, obj) {
+      let inst__proto = inst.__proto__;
+      while(inst__proto){
+        if(inst__proto == obj.prototype){
+          return true;
+        }
+        inst__proto = inst__proto.__proto__;
+      }
+      return false
+    }
+
+    let time = new Date();
+    console.log(time instanceof Array);
+    console.log(myin(time, Array));
   </script>
 </body>
 </html>
