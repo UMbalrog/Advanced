@@ -7,36 +7,10 @@
     <meta name="description" content="">
     <meta name="keywords" content="test,html">
     <title>test</title>
-    <style>
-      @keyframes rotate { 
-        from { transform: rotateY(0); } 
-        to { transform: rotateY(360deg); }  
-      }
-        *{ margin: 0; padding: 0; box-sizing: border-box; }
-
-    .container, .container.one, .two{ width: 100px; height: 100px; }
-        .container{ position: relative; transition: 1s; transform-style: preserve-3d; }
-        .container:hover { 
-          /* transform: rotateY(180deg);  */
-          animation: rotate 2s linear infinite;
-        }
-
-
-        .one{ position: absolute; top: 0; background: red; transform: rotateY(180deg);
-            backface-visibility: hidden;
-         }
-
-        .two{ position: absolute; top: 0; background: yellow;
-            backface-visibility: hidden;
-        }
-    </style>
 </head>
 <body>
-    <div class="par">
-        <div class="container">
-            <div class="one">隐藏在背后的元素</div>
-            <div class="two">初始显示在前面的元素</div>
-        </div>
-    </div>
+    <script>
+        
+    </script>
 </body>
 </html>
