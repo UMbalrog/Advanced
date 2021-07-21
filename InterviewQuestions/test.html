@@ -10,7 +10,30 @@
 </head>
 <body>
     <script>
-        
+      new Promise((reslove, reject) => {
+        reject()
+      }).then(res => {
+        console.log('reslove')
+      },err => {
+        console.log('reject')
+        return new Promise((reslove, reject) => {
+          reject('我是第一个字promise')
+        })
+      }).catch(err => {
+        console.log('catchreject')
+        return new Promise((reslove, reject) => {
+          reslove('我是第一个catch中的promise')
+        })
+      }).then(res => {
+        console.log('reslove2', res)
+      },err => {
+        console.log('reject2')
+        // return new Promise((reslove, reject) => {
+        //   reject()
+        // })
+      }).catch(err => {
+        console.log('catchreject2')
+      })
     </script>
 </body>
 </html>
