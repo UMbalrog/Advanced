@@ -6,8 +6,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.0.5",
-    "wblive-ui": "^0.1.25"
+    "vue": "^3.0.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.5",
