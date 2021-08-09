@@ -9,7 +9,7 @@
         <span>{{item.name}}</span><span>{{item.age}}</span>
       </div>
     </div>
-
+    <div>{{stat}}</div>
   </div>
 </template>
 
@@ -18,6 +18,7 @@ import { defineProps, reactive, onBeforeMount } from 'vue';
 
 defineProps({
   msg: String,
+  stat: Number
 })
 let age = 60;
 
@@ -46,6 +47,13 @@ const autoPush = () => {
 onBeforeMount(() => {
   autoPush();
 })
+
+
+
+// 组件分割
+
+
+
 
 </script>
 
