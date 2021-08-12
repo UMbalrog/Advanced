@@ -1,14 +1,11 @@
 <template>
-  <div>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Hello Vue 3 + Vite" :stat="status" />
-    <video src="https://plwb01.live.weibo.com/alicdn/4667143549617561.m3u8"></video>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-const status = 10;
+// import HelloWorld from './components/HelloWorld.vue'
+
+// const status = 10;
 
 
 </script>

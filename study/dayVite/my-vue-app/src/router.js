@@ -1,29 +1,21 @@
-import { h } from 'vue'
+import * as VueRouter from 'vue-router'
 
 import Home from './views/home.vue'
 import Shop from './views/shop.vue'
 import NotFound from './views/404.vue'
 
-const routes = {
-  '/': Home,
-  '/shop': Shop
-}
+const routes = [
+  { path: '/', component: Home },
+  { path: '/shop', component: Shop },
+  { path: '/404', component: NotFound },
+  { path: '/:pathMatch(.*)', redirect: '/404'}
+]
 
-const SimpleRouter = {
-  data: () => ({
-    currentRoute: window.location.pathname
-  }),
+const router = VueRouter.createRouter({
+  // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+  history: VueRouter.createWebHistory(),
+  routes, // `routes: routes` 的缩写
+})
 
-  computed: {
-    CurrentComponent() {
-      return routes[this.currentRoute] || NotFound
-    }
-  },
-
-  render() {
-    return h(this.CurrentComponent)
-  }
-}
-
-export default SimpleRouter
+export default router
 

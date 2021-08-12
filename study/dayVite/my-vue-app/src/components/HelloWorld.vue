@@ -1,15 +1,8 @@
 <template>
   <div>
     <h1>{{ msg }}</h1>
-    <div>数字{{state.count}}</div>
-    <div @click="setCount">按钮</div>
-    <div>····················</div>
-    <div>
-      <div v-for="(item, k) in list" :key="k">
-        <span>{{item.name}}</span><span>{{item.age}}</span>
-      </div>
-    </div>
-    <div>{{stat}}</div>
+    <div class="number">数字{{state.count}}</div>
+    <div class="btn" @click="setCount">按钮</div>
   </div>
 </template>
 
@@ -52,13 +45,22 @@ onBeforeMount(() => {
 
 // 组件分割
 
-
-
-
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 a {
   color: #42b983;
+}
+.number{
+  font-size: 18px;
+  color: #42b983;
+}
+.btn{
+  width: 80px;
+  height: 36px;
+  background-color: antiquewhite;
+  line-height: 38px;
+  text-align: center;
+  border-radius: 5px;
 }
 </style>
