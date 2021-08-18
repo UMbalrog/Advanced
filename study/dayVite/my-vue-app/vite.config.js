@@ -7,13 +7,13 @@ import legacy from '@vitejs/plugin-legacy'
 export default defineConfig({
   plugins: [
     vue(),
-    legacy({
-      targets: ['ie >= 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-    })
+    // legacy({
+    //   targets: ['ie >= 11'],
+    //   additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+    // })
   ],
   build:{
-    target: 'es2015',
+    // target: 'es2015',
     outDir: 'dist',
     // lib: {
     //   entry: path.resolve(__dirname, 'src/main.js'),

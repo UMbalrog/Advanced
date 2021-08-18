@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-// import HelloWorld from './components/HelloWorld.vue'
 
 // const status = 10;
 
