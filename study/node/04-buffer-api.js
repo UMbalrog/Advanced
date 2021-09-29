@@ -2,7 +2,7 @@
  * @Author: xujie 
  * @Date: 2021-09-29 17:22:49 
  * @Last Modified by: xujie
- * @Last Modified time: 2021-09-29 17:59:35
+ * @Last Modified time: 2021-09-29 18:23:04
  */
 
 // 1、fill
@@ -11,7 +11,7 @@
   一共三个参数，后面两个为添加位置，顾前不顾后，[)
 */ 
 
-const b1 = Buffer.alloc(6);
+// const b1 = Buffer.alloc(6);
 
 // b1.fill('1234'); 
 // b1.fill('1234', 1, 3);
@@ -76,11 +76,46 @@ const b1 = Buffer.alloc(6);
 */ 
 
 
-let b2 = Buffer.from('天天快乐')
-let b3 = Buffer.alloc(6)
+// let b2 = Buffer.from('天天快乐')
+// let b3 = Buffer.alloc(6)
 
-b2.copy(b3, 3, 6, 9) //将b2拷贝进入b3
+// b2.copy(b3, 3, 6, 9) //将b2拷贝进入b3
 
-console.log(b2.toString())
-console.log(b3)
-console.log(b3.toString())
+// console.log(b2.toString())
+// console.log(b3)
+// console.log(b3.toString())
+
+// buffer的静态方法
+
+// concat 拼接 
+
+// let b1 = Buffer.from('拉勾')
+// let b2 = Buffer.from('教育')
+// 1为数组，合并buffer，2为限制长度
+// let b = Buffer.concat([b1, b2], 9)
+// console.log(b)
+// console.log(b.toString())
+
+//  isBuffer
+// let b3 = '123';
+// console.log(Buffer.isBuffer(b3))
+
+
+// split 方法的封装
+ArrayBuffer.prototype.split = function(seq) {
+  let len = Buffer.from(seq).length;
+  let res = [];
+  let start = 0;
+  let end = 0;
+  while(end = this.indexOf(seq, start) !== -1){
+    res.push(this.slice(start, end));
+    start = end + len;
+  }
+  ret.push(this.slice(start)); //最后需要截取最后的
+  return res;
+}
+
+// let buf = Buffer.from('zce吃馒头，吃面条，我吃所有');
+let buf = 'zce吃馒头，吃面条，我吃所有吃';  //此处不对
+let bufArr = buf.split('吃')
+console.log(bufArr);
