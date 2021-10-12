@@ -2,7 +2,7 @@
  * @Author: xujie 
  * @Date: 2021-10-11 18:40:26 
  * @Last Modified by: xujie
- * @Last Modified time: 2021-10-11 18:58:03
+ * @Last Modified time: 2021-10-12 14:31:39
  * 大文件的读写操作
  */
 
@@ -17,8 +17,8 @@ const path = require('path');
 //     1、读取文件标识符；
 //     2、buf；
 //     3、buf 开始写入的位置；
-//     4、写入的字符长度；
-//     5、要写入的文件字符开始位置；
+//     4、读取的字符长度；
+//     5、要读取的文件字符开始位置；
 //   */ 
 //   fs.read(rfd, buf, 1, 4, 3, (err, readBytes, data) => {
 //     console.log(readBytes);
@@ -35,8 +35,8 @@ fs.open('b.txt', 'w', (err, wfd) => {
     1、读取文件标识符；
     2、buf；
     3、buf 开始读取的位置；
-    4、读取的字符长度； 
-    5、要读取的文件字符开始位置； 一般为0
+    4、写入的字符长度； 
+    5、要写入的文件字符开始位置； 一般为0
   */ 
   fs.write(wfd, buf, 0, 6, 0, (err, writeBytes, data) => {
     console.log(writeBytes);
