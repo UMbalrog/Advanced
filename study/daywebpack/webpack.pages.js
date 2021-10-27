@@ -124,6 +124,6 @@ module.exports = {
     // 压缩输出结果
     minimize: true,
     // --------------
-    sideEffects: true //副作用生成模式下会自动开启，开启之后，会先去当前项目的package.json查看当前代码是否有副作用，没有的话，就不会打包儿无用的模块。
+    sideEffects: true //副作用生产模式下会自动开启，开启之后，会先去当前项目的package.json查看当前代码是否有副作用，没有的话，就不会打包儿无用的模块。
   }
 }
