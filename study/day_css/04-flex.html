@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .fa{
+    width: 100%;
+    height: 500px;
+    background-color: #eee;
+    display: flex;
+    /* flex-direction: row-reverse; */
+    /* flex-direction: column-reverse; */
+    flex-wrap: nowrap;
+    /* flex-wrap: wrap; 换行与不换行 */
+    /* flex-wrap: wrap-reverse; */
+    /* justify-content: center; */
+    /* justify-content: flex-end  */
+    /* justify-content: space-between; */ /* 两端对齐 */
+    justify-items: flex-end;
+    /* 元素两侧间隔相等 */
+    /* justify-content: space-around; */
+    /* 元素之间间隔相等 */
+    /* justify-content: space-evenly;  */
+
+    /* align-items: flex-end; */
+
+    /* align-content: space-between; */
+    /* align-content: stretch; */
+    /* 缩写 */
+    /* flex-flow: <flex-direction> <flex-wrap>; */
+  }
+  .box{
+    width: 150px;
+    height: 150px;
+    font-size: 100px;
+    /* display: inline-block; */
+    /* flex-basis: 0; */
+  }
+  .ch1{
+    background: antiquewhite;
+    /* flex-grow项目的放大比例，默认为0，即如果存在剩余空间，也不放大 */
+    /* flex-grow: 2; */
+    /* 项目的缩小比例，默认为1 */
+    /* flex-shrink: 0; */
+
+    /* 缩写。grow,shrink,basis */
+    /* flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ] */
+    /* flex: 2 0 0,  */
+  }
+  .ch2{
+    background: red;
+    /* order排列顺序。数值越小，排列越靠前，默认为0。 */
+    /* order: -1;  */
+    /* flex-grow: 1; */
+    /* flex: 1 0 0; */
+  }
+  .ch3{
+    background:rosybrown;
+    /* flex-grow: 1; */
+    /* 单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。 */
+
+    /* flex: 1 0 0; */
+    /* align-self: flex-end; */
+    /* align-self: flex-start; */
+    /* align-self: baseline; */
+    margin-left: auto;
+  }
+  .ch4{
+    background: forestgreen;
+  }
+  .ch5{
+    background: royalblue;
+  }
+</style>
+<body>
+  <div class="fa">
+    <div class="box ch1">1</div>
+    <div class="box ch2">2</div>
+    <div class="box ch3">3</div>
+    <!-- <div class="box ch4">4</div>
+    <div class="box ch5">5</div> -->
+  </div>
+  <script>
+    function getUrlParam(sUrl, sKey) {
+  
+    }
+  </script>
+</body>
+</html>

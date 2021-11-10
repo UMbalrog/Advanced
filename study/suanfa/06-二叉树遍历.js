@@ -61,3 +61,22 @@ var preorderTraversal = function(root) {
   // }
   return res;
 }
+
+// 求二叉树的层序遍历 
+function levelOrder( root ) {
+  if(!root || !root.val){return []};
+  let arr = [], arr1 = [];
+  arr.push(root);
+  while(arr.length){
+    let temp = [];
+    let len = arr.length;
+    while(len--){
+      let val = arr.shift();
+      temp.push(val.val);
+      val.left && arr.push(val.left);
+      val.right && arr.push(val.right);
+    }
+    arr1.push(temp);
+  }
+  return arr1;
+}
