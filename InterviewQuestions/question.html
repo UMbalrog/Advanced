@@ -124,7 +124,7 @@
         }
     }
 
-    let arrL = [1,2,3,4,5,6];
+    let arrL = [1,2,3,4];
     let Linked = new List(arrL).head; // 链表
     // traverseList(Linked);
     //反转列表
@@ -134,24 +134,17 @@
         // 保存下一个节点
         next = listHead.next;
         // 将下个节点指向 前一个节点
+        console.log('pre', JSON.stringify(pre));
         listHead.next = pre;
-        // 赋值前一个节点
+        // 赋值前一个节, //记录前一个节点；
         pre = listHead;
         // 移动下一个节点继续循环
         listHead = next;
       }
       return pre;
     }
-    // phead
-    // let pre = null, next = null;
-    // while(phead){
-    //   next = phead.next;
-    //   phead.next = pre;
-    //   pre = phead;
-    //   phead = next; // 继续之后的循环；
-    // }
 
-    // console.log(reversal(Linked));
+    console.log(reversal(Linked));
 
 
     // 求二叉树的层序遍历 
