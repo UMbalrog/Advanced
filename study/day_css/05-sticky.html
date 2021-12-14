@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    }
+    .wrap{
+    overflow: hidden;
+    position: relative;
+    padding: 50px;
+    }
+    .left{
+    float: left;
+    width: 350px;
+    height: 350px;
+    position: relative;
+    border: 1px solid green;
+    cursor: move;
+    }
+    .left img{
+    width: 350px;
+    height: 350px;
+    display: block;
+    }
+    .mask{
+    width: 175px;
+    height: 175px;
+     
+    opacity: 0.5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    }
+    .right{
+    float: left;
+    width: 814px;
+    height: 462px;
+    margin-left: 20px;
+    }
+    .right img{
+    width: 814px;
+    height: 462px;
+    display: block;
+    }
+    .showbox{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left: 410px;
+    top: 50px;
+    overflow: hidden;
+    border: 1px solid red;
+    display: none;
+    }
+    .showbox img{
+    width: 800px;
+    height: 800px;
+    position: absolute;
+    }
+    </style>
+    </head>
+    <body>
+     
+    <div class="wrap">
+    <div class="left">
+    <img class="minimg" src="max.jpg" alt="">
+    <div class="mask"></div>
+    </div>
+    <div class="right">
+    <img src="msg.png" alt="">
+    </div>
+    <div class="showbox">
+    <img class="maximg" src="max.jpg" alt="">
+    </div>
+    </div>
+     
+    <script>
+    // 1.鼠标移入：原图容器 -> 蒙板层显示、放大的图显示
+    // 2.鼠标移出：原图容器 -> 蒙板层隐藏、放大的图隐藏
+    // 3.鼠标移动：原图容器 -> 蒙板跟着移动、放大图跟着移动（移动方向相反 -负数）
+     
+    (function () {
+    function Magnify(domObj) {
+    this.left = domObj.left;
+    this.mask = domObj.mask;
+    this.showBox = domObj.showBox;
+    this.maxImg = domObj.maxImg;
+    }
+    Magnify.prototype = {
+    addEvent: function () {
+    this.left.onmouseover = function () {
+    this.showHide(this.mask,'block');
+    this.showHide(this.showBox,'block');
+    }.bind(this);
+    this.left.onmouseout = function () {
+    this.showHide(this.mask,'none');
+    this.showHide(this.showBox,'none');
+    }.bind(this);
+    this.left.onmousemove = function (ev) {//移动 定位
+    var e = ev || window.event;
+    this.move(e);
+    }.bind(this);
+    },
+    showHide: function (dom,val) {
+    dom.style.display = val;
+    },
+    move: function (e) {
+    // 计算蒙板的定位值
+    var l = e.clientX - this.mask.clientWidth/2 - this.left.offsetLeft;
+    var t = e.clientY - this.mask.clientHeight/2 - this.left.offsetTop;
+     
+    if (l <= 0){//左边临界值
+    l = 0;
+    }
+    if (l >= (this.left.clientWidth - this.mask.clientWidth)) {//右边临界值
+    l = this.left.clientWidth - this.mask.clientWidth;
+    }
+    if (t <= 0) {//上边界
+    t = 0;
+    }
+    if (t >= (this.left.clientHeight - this.mask.clientHeight)) {//下边界
+    t = this.move.clientHeight - this.mask.clientHeight;
+    }
+     
+    // 蒙板定位
+    this.mask.style.left = l + 'px';
+    this.mask.style.top = t + 'px';
+     
+    // 运动比例
+    var scaleX = l / (this.left.clientWidth - this.mask.clientWidth);
+    var scaleY = t / (this.left.clientHeight - this.mask.clientHeight);
+     
+    // 大图定位
+    this.maxImg.style.left = -(this.maxImg.clientWidth - this.showBox.clientWidth) * scaleX + 'px';
+    this.maxImg.style.top = -(this.maxImg.clientHeight - this.showBox.clientHeight) * scaleY + 'px';
+    },
+    init: function () {
+    this.addEvent();
+    return this;
+    }
+    }
+    function factory(domObj) {
+    return new Magnify(domObj).init();
+    }
+    window.magnify = factory;
+    })();
+     
+     
+    magnify({
+    left: document.querySelector('.left'),
+    mask: document.querySelector('.mask'),
+    showBox: document.querySelector('.showbox'),
+    maxImg: document.querySelector('.maximg')
+    });
+     
+     
+     
+     
+     
+    </script>
+
+</html>

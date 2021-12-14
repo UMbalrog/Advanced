@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>textureAnimate</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      html,
+      body {
+        /* display: flex;
+        align-items: center;
+        justify-content: center; */
+        height: 100%;
+      }
+      #gl-canvas {
+        background: url('./banner.jpg') no-repeat center;
+        background-size: 100% 100%;
+      }
+      .title{
+        color: #fff;
+        font-size: 56px;
+        font-weight: 800;
+        position: absolute;
+        top: 300px;
+        left: 400px;
+      }
+      
+    </style>
+    <script src="./gl-renderer.js"></script>
+  </head>
+  <body>
+    <canvas id="gl-canvas"></canvas>
+    <div class="title"> top 1 </div>
+    <script>
+      const canvasWidth = 1450;
+      const canvasHeight = 828;
+      const canvas = document.getElementById("gl-canvas");
+
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      
+      //存储偏移量 计算探照灯坐标时使用
+      const canvasOffsetX = canvas.offsetLeft;
+      const canvasOffsetY = canvas.offsetTop;
+
+      //初始化探照灯位置(纹理)
+      let curCanvasPosPercent = {
+        x: 0,
+        y: 0,
+      };
+
+      //这边可以依据个人情况适当节流
+      window.addEventListener("mousemove", (e) => {
+        curCanvasPosPercent.x = Math.max(Math.min(e.pageX - canvasOffsetX, canvasWidth), 0);
+        curCanvasPosPercent.y = canvasHeight - Math.max(Math.min(e.pageY - canvasOffsetY, canvasHeight), 0);
+      });
+
+      (async function () {
+        const renderer = new GlRenderer(canvas);
+        //分别加载顶点着色器和片元着色器初始化 program
+        const program = await renderer.load("fragmentShader.frag", ["vertexShader.frag"]);
+        renderer.useProgram(program);
+
+        //加载纹理
+        const texture = await renderer.loadTexture("bannerhover.jpg");
+        renderer.uniforms.tMap = texture;
+        
+        //将画布的大小传给shader 用于像素渲染计算
+        renderer.uniforms.canvasWidth = canvasWidth;
+        renderer.uniforms.canvasHeight = canvasHeight;
+
+        //设置顶点数据  顶点索引 uv坐标
+        renderer.setMeshData([
+          {
+            positions: [
+              [-1, -1],
+              [-1, 1],
+              [1, 1],
+              [1, -1],
+            ],
+            attributes: {
+              uv: [
+                [0, 0],
+                [0, 1],
+                [1, 1],
+                [1, 0],
+              ],
+            },
+            cells: [
+              [0, 1, 2],
+              [2, 0, 3],
+            ],
+          },
+        ]);
+
+        renderer.render();
+
+        function update() {
+          //在每一帧获取最新坐标
+          renderer.uniforms.xPot = curCanvasPosPercent.x;
+          renderer.uniforms.yPot = curCanvasPosPercent.y;
+
+          requestAnimationFrame(update);
+        }
+        update();
+      })();
+    </script>
+  </body>
+</html>

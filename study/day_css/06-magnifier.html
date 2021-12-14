@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>imageMagnifier</title>
+</head>
+
+<body>
+    <canvas id="canvas" style="display: block; margin: 0 auto;">您的浏览器尚不支持Canvas</canvas>
+    <canvas id="offCanvas" style="display: none; margin: 0 auto; border: 1px solid #eee;">您的浏览器尚不支持Canvas</canvas>
+    <script>
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var imageBanner = new Image();
+    var imageHover = new Image();
+
+    var offCanvas = document.getElementById('offCanvas');
+    var offContext = offCanvas.getContext('2d');
+
+    var scale = 0; //缩放比例
+    var point; //存放坐标位置
+    var isMouseDown = true; //是否按下鼠标
+
+    // 2560
+    // 1200
+
+    canvas.width = 2560; // 2133;
+    canvas.height = 1200; // 1000;
+
+    window.onload = function() {
+        imageBanner.src = './banner.jpg';
+        imageBanner.onload = function() {
+            context.drawImage(imageBanner, 0, 0, canvas.width, canvas.height);
+        };
+
+        imageHover.src = './bannerhover.jpg';
+        imageHover.onload = function() {
+            offCanvas.width = imageHover.width;
+            offCanvas.height = imageHover.height;
+            // offCanvas.width = canvas.width * 1.5;
+            // offCanvas.height = canvas.height * 1.5;
+            scale = offCanvas.width / canvas.width; //由于刚好宽高比例一样
+            offContext.drawImage(imageHover, 0, 0);
+            vague(imageHover.width, imageHover.height)
+        };
+    };
+
+    // 画布鼠标各种事件
+    canvas.onmousedown = function(event) {
+    	event.preventDefault();
+    	isMouseDown = true;
+        point = windowToCanvas(event.clientX, event.clientY);
+        // console.log(point);
+        drawCanvasWithMagnifier(true, point);
+    };
+    canvas.onmousemove = function(event) {
+    	event.preventDefault();
+    	if (isMouseDown) {
+    		point = windowToCanvas(event.clientX, event.clientY);
+        	drawCanvasWithMagnifier(true, point);
+    	}
+    };
+    canvas.onmouseup = function(event) {
+    	event.preventDefault();
+    	isMouseDown = false;
+    	drawCanvasWithMagnifier(false);
+    };
+    canvas.onmouseout = function(event) {
+    	event.preventDefault();
+    	isMouseDown = false;
+    	drawCanvasWithMagnifier(false);
+    };
+
+    // 判断是否绘制放大镜
+    function drawCanvasWithMagnifier(isShowMagnifier, point) {
+    	context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(imageBanner, 0, 0, canvas.width, canvas.height);
+        if (isShowMagnifier) {
+        	drawMagnifier(point);
+        }
+    }
+    // 绘制放大镜
+    function drawMagnifier(point) {
+    	var r = 200; //放大镜的半径
+    	var dx = point.x;
+    	var dy = point.y;
+    	console.log(scale);
+    	var sx = dx * scale - r;
+        var sy = dy * scale - r;
+       	
+       	context.save();
+       	context.beginPath();
+       	context.arc(dx, dy, r, 0, 2 * Math.PI);
+
+       	context.lineWidth = 0;
+        context.strokeStyle = "rgba(0,0,0,0)";
+
+       	context.stroke();
+       	context.clip();
+           
+        context.drawImage(offCanvas, sx, sy, 2 * r, 2 * r, dx - r, dy - r, 2 * r, 2 * r);
+        context.restore();
+    }
+    // 点击点坐标从window换成canvas的坐标
+    function windowToCanvas(x, y) {
+        var bbox = canvas.getBoundingClientRect();
+        return { 
+        	x: x - bbox.left,
+        	y: y - bbox.top 
+        };
+    }
+    // 模糊效果（原理：取blurR为模糊半径，越大越模糊，循环blurR累加R G B，除以总数量并赋值产生模糊效果）
+    function vague(width, height) {
+        var tmpImageData = offContext.getImageData(0, 0, width, height);
+        var tmpPixelData = tmpImageData.data;
+
+        var imageData = offContext.getImageData(0, 0, width, height);
+        var pixelData = imageData.data;
+
+        var canvasb = {
+            width: width,
+            height: height
+        };
+        var blurR = 2;
+        // var totalnum = (2*blurR + 1)*(2*blurR + 1)
+        for (var i = 0; i < canvasb.height; i++) {
+            for (var j = 0; j < canvasb.width; j++) {
+                var totalr = 0,
+                    totalg = 0,
+                    totalb = 0,
+                    totaop = 0,
+                    totalnum = 0;
+                for (var dx = -blurR; dx <= blurR; dx++) {
+                    for (var dy = -blurR; dy <= blurR; dy++) {
+                        var x = i + dx;
+                        var y = j + dy;
+                        if (x < 0 || y < 0 || x >= canvasb.height || y >= canvasb.width)
+                            continue; //跳出本次循环（溢出不做数量累加）
+                        totalnum++;
+                        var p = x * canvasb.width + y;
+                        // console.log(p);
+                        totalr += tmpPixelData[p * 4 + 0];
+                        totalg += tmpPixelData[p * 4 + 1];
+                        totalb += tmpPixelData[p * 4 + 2];
+                        totaop += tmpPixelData[p * 4 + 3];
+                    }
+                }
+               
+                var n = i * canvasb.width + j;
+                pixelData[n * 4 + 0] = totalr / totalnum;
+                pixelData[n * 4 + 1] = totalg / totalnum;
+                pixelData[n * 4 + 2] = totalb / totalnum;
+
+                var op = parseInt(Math.pow(Math.cos(Math.atan2(j - 1280, i - 600) / 2 + 2 * Math.acos(-1) / 3), 2) * 255);
+                // console.log('透明度', op)
+                pixelData[n * 4 + 3] = op/1.6;
+            }
+        }
+        // console.log(pixelData)
+        offContext.clearRect(0, 0, canvasb.width, canvasb.height);
+        offContext.putImageData(imageData, 0, 0, 0, 0, canvasb.width, canvasb.height);
+    };
+    </script>
+</body>
+
+</html>
