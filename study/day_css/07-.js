@@ -1,5 +1,3 @@
-"use strict";
-
 var aeGap,
     aeObserverAPI,
     aeContainer = document.body.querySelector("#ae-wrapper"),
